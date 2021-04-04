@@ -18,45 +18,63 @@ Class {
 
 { #category : #running }
 TestUsuario >> setUp [
+	"Errores que encontré en el setUp:
+	-Básicamente, siempre que se pasaba un usuario se pasaba un String, lo cuál es incorrecto."
+	
+	"Usuarios"
 	user1 := Usuario nombreUsuario: 'Raul' contraseña: '12345'.
 	toFollow := Usuario nombreUsuario: 'Messi' contraseña: 'Messirve'.
 	user3 := Usuario nombreUsuario: 'another' contraseña: 'otro'.
-	p1 := Pregunta titulo: '???' texto: 'no se nada' usuario: 'Raul'.
-	p2 := Pregunta titulo: '!!!' texto: 'que' usuario: 'Raul'.
-	p3 := Pregunta
-		titulo: 'Soy Messi'
-		texto: 'Soy el mejor jugador de la historia?'
-		usuario: 'Messi'.
-	p4 := Pregunta titulo: 'ready' texto: 'alla vamos' usuario: 'another'.
+	
+	"Preguntas"
+	p1 := Pregunta titulo: '???' texto: 'no se nada' usuario: user1.
+	p2 := Pregunta titulo: '!!!' texto: 'que' usuario: user1.
+	p3 := Pregunta titulo: 'Soy Messi' texto: 'Soy el mejor jugador de la historia?' usuario: toFollow .
+	p4 := Pregunta titulo: 'ready' texto: 'alla vamos' usuario: user3.
+	
+	"Acciones"
 	user1
 		registrarPregunta: p1;
 		registrarPregunta: p2.
 	toFollow registrarPregunta: p3.
-	r1 := p1 agregarRespuestaConTexto: 'hola' usuario: 'Messi'.
-	r2 := p3 agregarRespuestaConTexto: 'si lo eres' usuario: 'Raul'.
-	p2 darDislike: 'Messi'.
-	r2 darLike: 'Messi'.
-	t1 := Topico nombre: 'futbol' descripcion: 'todo sobre futbol'
+	user3 registrarPregunta: p4.
+	
+	r1 := p1 agregarRespuestaConTexto: 'hola' usuario: toFollow.
+	r2 := p3 agregarRespuestaConTexto: 'si lo eres' usuario: user1.
+	
+	p2 darDislike: toFollow.
+	r2 darLike: toFollow.
+	
+	t1 := Topico nombre: 'Futbol' descripcion: 'Todo sobre futbol'.
+	t1 registrarPregunta: p4.
+]
+
+{ #category : #tests }
+TestUsuario >> testBajaPregunta [ 
+	user1 bajaPregunta: p1.
+	self assert: user1 preguntasHechas size equals: 1
 ]
 
 { #category : #tests }
 TestUsuario >> testDevolverPreguntasRelevantes [
-	| tmp1 tmp2 |
+	| preguntasRel pregunta |
 	user1 seguirUsuario: toFollow.
-	tmp1 := user1 devolverPreguntasRelevantes.
-	tmp2 := tmp1 first first.
-	self
-		assert: tmp1 size equals: 1;
-		assert: tmp2 usuario equals: 'Messi'.
-	t1 registrarPregunta: p4.
+	preguntasRel := user1 devolverPreguntasRelevantes.
+	pregunta := preguntasRel first.
+	
+	self assert: preguntasRel size equals: 1.
+	self assert: (pregunta usuario) equals: toFollow .
+		
 	user1 registrarTopicoDeInteres: t1.
-	tmp1 := user1 devolverPreguntasRelevantes.
-	self assert: tmp1 size equals: 2
+	preguntasRel := user1 devolverPreguntasRelevantes.
+	self assert: preguntasRel size equals: 2
 ]
 
 { #category : #tests }
-TestUsuario >> testDevolverRespuestasUsuario [
-	
+TestUsuario >> testDevolverPuntajePreguntas [
+	"-Hizo dos preguntas: 40 puntos.
+	 -Le dieron un dislike a una de sus respuestas, le resta un punto."
+	self assert: user1 devolverPuntajePreguntas equals: 39.
 ]
 
 { #category : #tests }
@@ -78,10 +96,11 @@ TestUsuario >> testSeguirUsuario [
 
 { #category : #tests }
 TestUsuario >> testTopicoInteres [
+	| first |
 	user1 registrarTopicoDeInteres: t1.
+	first := user1 topicosInteres first.
 	self
 		assert: user1 topicosInteres size equals: 1;
-		assert: user1 topicosInteres first descripcion
-			equals: 'todo sobre futbol';
-		assert: user1 topicosInteres first nombre equals: 'futbol'
+		assert: first descripcion equals: 'Todo sobre futbol';
+		assert: first nombre equals: 'Futbol'
 ]

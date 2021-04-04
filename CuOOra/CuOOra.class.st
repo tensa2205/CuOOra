@@ -108,7 +108,7 @@ CuOOra >> obtenerRespuestasDePregunta: preg [
 CuOOra >> obtenerRespuestasHechasDeUsuario: user [
 	"Reject then Collect lo que hace es ver la colección de tal forma que estén todos los usuarios menos aquel usuario donde usuarioRechazar == user haya evaluado true.
 	Esto permite que se procesen todos los usuarios excepto el usuario que pasamos como parámetro (de tal forma que no tomemos respuestas a preguntas que hizo el mismo usuario)."
-	^ usuarios reject: [ : usuarioRechazar | usuarioRechazar == user ] thenCollect: [ : usuario | usuario devolverRespuestaUsuario: user ]
+	^ (usuarios reject: [ : usuarioRechazar | usuarioRechazar == user ] thenCollect: [ : usuario | usuario devolverRespuestasDeUsuarioEspecifico: user ]) flatCollect: [ : each | each ]
 ]
 
 { #category : #accessing }
@@ -129,4 +129,14 @@ CuOOra >> registrarTopicoDeInteres: topic paraUsuario: user [
 { #category : #usuarios }
 CuOOra >> seguirUsuario: usuarioSeguir conUsuario: seguidor [
 	seguidor seguirUsuario: usuarioSeguir
+]
+
+{ #category : #accessing }
+CuOOra >> topicos [
+	^ topicos
+]
+
+{ #category : #usuarios }
+CuOOra >> usuarios [
+	^ usuarios
 ]

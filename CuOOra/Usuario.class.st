@@ -64,9 +64,9 @@ Usuario >> devolverPreguntasRelevantes [
 					removeDuplicates )"
 	| relevantes |
 	relevantes := OrderedCollection new.
-	relevantes addAll: ( (seguidos collect:[: seguido | seguido preguntasHechas ]) flatCollect:[:each | each]).
-	relevantes addAll: ( (topicosInteres collect:[:topico | topico preguntas ]) flatCollect:[:each | each]).
-	relevantes flatCollect: [ : each | each ].
+	relevantes addAll:  (seguidos collect:[: seguido | seguido preguntasHechas ]).
+	relevantes addAll:  (topicosInteres collect:[:topico | topico preguntas ]).
+	relevantes := relevantes flatCollect: [ : each | each ].
 	^ relevantes removeDuplicates 
 
 	

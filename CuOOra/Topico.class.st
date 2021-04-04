@@ -37,8 +37,8 @@ Class {
 }
 
 { #category : #constructor }
-Topico class >> nombre: arg1 descripcion: arg2 [
-	^ self new nombre: name descripcion: arg2
+Topico class >> nombre: nom  descripcion: desc [
+	^ self new nombre: nom descripcion: desc
 ]
 
 { #category : #accessing }
