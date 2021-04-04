@@ -31,8 +31,22 @@ Class {
 		'usuarios',
 		'topicos'
 	],
+	#classInstVars : [
+		'soleInstance'
+	],
 	#category : #'CuOOra-model'
 }
+
+{ #category : #'instance creation' }
+CuOOra class >> clearSoleInstance [
+	soleInstance := nil
+]
+
+{ #category : #'instance creation' }
+CuOOra class >> soleInstance [
+	soleInstance ifNil: [ soleInstance := self new ].
+	^ soleInstance 
+]
 
 { #category : #accessing }
 CuOOra >> agregarPreguntaATopico: topics yUsuario: user conTitulo: title conDescripcion: desc [
