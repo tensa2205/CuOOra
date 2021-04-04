@@ -71,7 +71,9 @@ TestUsuario >> testPreguntasHechas [
 { #category : #tests }
 TestUsuario >> testSeguirUsuario [
 	user1 seguirUsuario: toFollow.
-	self assert: user1 seguidos size equals: 1
+	self assert: user1 seguidos size equals: 1.
+	user1 seguirUsuario: user3.
+	self assert: user1 seguidos size equals: 2.
 ]
 
 { #category : #tests }
