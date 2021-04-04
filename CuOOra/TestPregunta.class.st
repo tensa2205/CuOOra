@@ -12,20 +12,17 @@ Class {
 { #category : #running }
 TestPregunta >> setUp [
 	p1 := Pregunta titulo: 'Hola' texto: 'Mundo' usuario: 'Pepe'.
-	res1 := Respuesta texto: 'xxxxxxx' usuario: 'Diego'.
-	res2 := Respuesta texto: 'yyyyyyy' usuario: 'Pedro'.
-	p1 respuestas
-		add: res1;
-		add: res2
+	
+	p1 agregarRespuestaConTexto: 'xxxxxxx' usuario: 'Diego'.
+	p1 agregarRespuestaConTexto: 'yyyyyyy' usuario: 'Pedro'.
 ]
 
 { #category : #tests }
 TestPregunta >> testAgregarRespuesta [
-	| tmp1 tmp2 |
-	tmp1 := 'Sigue adelante'.
-	tmp2 := 'MotivationalManager'.
+	| user |
+	user := Usuario nombreUsuario: 'El pepe' contraseña: '1' .
 	self assert: p1 respuestas size equals: 2.
-	p1 agregarRespuestaConTexto: tmp1 usuario: tmp2.
+	p1 agregarRespuestaConTexto: 'Sigue adelante' usuario: user.
 	self assert: p1 respuestas size equals: 3
 ]
 
