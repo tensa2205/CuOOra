@@ -57,7 +57,7 @@ Pregunta >> initialize [
 
 { #category : #accessing }
 Pregunta >> respuestas [
-	^ respuestas
+	^ respuestas asSortedCollection sortBlock: [ : r1 : r2 | r1 devolverDiferenciaReacciones > r2 devolverDiferenciaReacciones ]
 ]
 
 { #category : #accessing }
