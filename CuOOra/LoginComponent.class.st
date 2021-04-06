@@ -12,6 +12,19 @@ LoginComponent class >> initialize [
 	
 ]
 
+{ #category : #callbacks }
+LoginComponent >> login [
+	(self model autenticarUsuarioConNombre: userName  protegidoPor: password ) "Si existe dicho usuario, lo devuelve"
+		ifNotNil: [ :it | self proceedWith: it ]. "Supongamos que it debe ser el usuario (?"
+	userName := nil.
+	password := nil
+]
+
+{ #category : #callbacks }
+LoginComponent >> registerNewUser [
+	self call: RegisterComponent new.
+]
+
 { #category : #rendering }
 LoginComponent >> renderButtonsOn: aCanvas [
 	self renderSignInButtonOn: aCanvas.

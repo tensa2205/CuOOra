@@ -23,6 +23,12 @@ AccessGrantingComponent >> password: anPassword [
 	password := anPassword 
 ]
 
+{ #category : #private }
+AccessGrantingComponent >> proceedWith: aUser [
+	self session user: aUser.
+	self call: CuOOraHomeComponent new
+]
+
 { #category : #rendering }
 AccessGrantingComponent >> renderButtonsOn: aCanvas [
 	self subclassResponsibility 
