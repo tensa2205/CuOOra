@@ -66,6 +66,13 @@ CuOOra >> agregarTopicoConNombre: nom descripcion: desc [
 	topicos add: (Topico nombre: nom descripcion: desc)
 ]
 
+{ #category : #usuarios }
+CuOOra >> autenticarUsuarioConNombre: unNombre protegidoPor: unaPassword [
+	^ usuarios
+		detect: [ :user | user nombreUsuario = unNombre & (user contraseña = unaPassword)  ] 
+		ifNone: [ nil ]
+]
+
 { #category : #accessing }
 CuOOra >> borrarPregunta: pregunta [
 	"Es necesario recorrer cada tópico para ver si la pregunta está ahí? Esto podría evitarlo haciendo una dirección bidireccional, Pero que tan sano sería usar una relación así?"
@@ -79,6 +86,8 @@ CuOOra >> borrarPregunta: pregunta [
 
 { #category : #usuarios }
 CuOOra >> crearUsuarioConNombre: nom contraseña: password [
+	(usuarios anySatisfy: [ :usuario | usuario nombreUsuario = nom ])
+	ifTrue: [ ^ self ].
 	usuarios add: (Usuario nombreUsuario: nom contraseña: password)
 ]
 
