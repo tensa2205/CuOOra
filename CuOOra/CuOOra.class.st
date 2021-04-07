@@ -119,7 +119,10 @@ CuOOra >> obtenerPreguntasHechasDeUsuario: user [
 
 { #category : #usuarios }
 CuOOra >> obtenerPreguntasRelevantesDeUsuario: user [
-	^ user devolverPreguntasRelevantes
+	| relevantes |
+	relevantes := user devolverPreguntasRelevantes.
+	relevantes := relevantes sort:[ :pregunta1 :pregunta2 | pregunta1 devolverFecha > pregunta2 devolverFecha ].
+	^ relevantes collect: [ :each | each ] from: 1 to: 5
 ]
 
 { #category : #accessing }

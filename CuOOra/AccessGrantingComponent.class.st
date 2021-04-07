@@ -36,6 +36,7 @@ AccessGrantingComponent >> renderButtonsOn: aCanvas [
 
 { #category : #rendering }
 AccessGrantingComponent >> renderContentOn: aCanvas [
+	aCanvas heading: 'CuOOra'.
 	aCanvas
 		form: [ 
 			self renderInputElementsOn: aCanvas.
@@ -45,14 +46,17 @@ AccessGrantingComponent >> renderContentOn: aCanvas [
 
 { #category : #rendering }
 AccessGrantingComponent >> renderInputElementsOn: aCanvas [
-	aCanvas label: 'Nombre de usuario'.
 	aCanvas paragraph: [ 
+		aCanvas label: 'Usuario:'.
+		aCanvas space: 10.
 		aCanvas textInput 
 			callback: [ :valorNuevo | self userName: valorNuevo ];
 			with: self userName.  ].
 	
-	aCanvas label: 'Contraseña'.
+	
 	aCanvas paragraph: [ 
+		aCanvas label: 'Contraseña:'.
+		aCanvas space: 5.
 		aCanvas passwordInput
 		callback: [ :valorNuevo | self password: valorNuevo ];
 		with: self password ].

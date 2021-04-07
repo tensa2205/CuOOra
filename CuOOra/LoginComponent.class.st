@@ -21,6 +21,12 @@ LoginComponent >> login [
 ]
 
 { #category : #callbacks }
+LoginComponent >> logout [
+	self session unregister.
+	self requestContext redirectTo: self application url
+]
+
+{ #category : #callbacks }
 LoginComponent >> registerNewUser [
 	self call: RegisterComponent new.
 ]
@@ -35,6 +41,7 @@ LoginComponent >> renderButtonsOn: aCanvas [
 
 { #category : #rendering }
 LoginComponent >> renderSignInButtonOn: aCanvas [
+	aCanvas space: 25.
 	aCanvas submitButton 
 		callback: [ self login ];
 		with: 'Iniciar sesion'
