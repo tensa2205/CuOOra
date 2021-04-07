@@ -45,6 +45,11 @@ Pregunta >> agregarRespuestaConTexto: text usuario: user [
 ]
 
 { #category : #accessing }
+Pregunta >> devolverCantidadRespuestas [
+	^ respuestas size 
+]
+
+{ #category : #accessing }
 Pregunta >> devolverRespuestasUsuario: user [
 	^ respuestas select: [ :respuesta | respuesta chequearRespuesta: user ]
 ]

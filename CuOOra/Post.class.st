@@ -39,6 +39,16 @@ Class {
 }
 
 { #category : #accessing }
+Post >> cantDislikes [
+	^ (reacciones reject: [ :react | react voto ]) size.
+]
+
+{ #category : #accessing }
+Post >> cantLikes [
+	^ (reacciones select: [ :react | react voto ]) size.
+]
+
+{ #category : #accessing }
 Post >> darDislike: user [
 	| react |
 	react := reacciones select: [ :reaccion | reaccion usuario = user ].
@@ -64,15 +74,12 @@ Post >> darLike: user [
 
 { #category : #accessing }
 Post >> devolverDiferenciaReacciones [
-	| sizeLikes sizeDislikes |
-	sizeLikes := (reacciones select: [ :react | react voto ]) size.
-	sizeDislikes := (reacciones reject: [ :react | react voto ]) size.
-	^ sizeLikes - sizeDislikes
+	^ self cantLikes - self cantDislikes 
 ]
 
 { #category : #accessing }
 Post >> devolverFecha [
-	^ timeStamp date
+	^ timeStamp asDate
 ]
 
 { #category : #accessing }

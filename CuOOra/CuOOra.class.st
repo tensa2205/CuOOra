@@ -48,6 +48,16 @@ CuOOra class >> soleInstance [
 	^ soleInstance 
 ]
 
+{ #category : #temporal }
+CuOOra >> addTopic: anTopic [
+	topicos add: anTopic
+]
+
+{ #category : #temporal }
+CuOOra >> addUser: anUser [
+	usuarios add: anUser.
+]
+
 { #category : #accessing }
 CuOOra >> agregarPreguntaATopico: topics yUsuario: user conTitulo: title conDescripcion: desc [
 	| preg |
@@ -122,6 +132,8 @@ CuOOra >> obtenerPreguntasRelevantesDeUsuario: user [
 	| relevantes |
 	relevantes := user devolverPreguntasRelevantes.
 	relevantes := relevantes sort:[ :pregunta1 :pregunta2 | pregunta1 devolverFecha > pregunta2 devolverFecha ].
+	(relevantes size < 5)
+	ifTrue:[^ relevantes].
 	^ relevantes collect: [ :each | each ] from: 1 to: 5
 ]
 

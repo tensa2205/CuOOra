@@ -11,6 +11,32 @@ CuOOraHomeComponent >> logout [
 
 { #category : #rendering }
 CuOOraHomeComponent >> renderContentOn: aCanvas [
+	self renderLoggedUser: aCanvas.
+	aCanvas horizontalRule .
+	self renderLastQuestions: aCanvas.
+]
+
+{ #category : #rendering }
+CuOOraHomeComponent >> renderLastQuestions: aCanvas [
+	aCanvas heading: 'Ultimas preguntas'.
+	aCanvas
+		unorderedList: [ 
+			((CuOOra soleInstance) obtenerPreguntasRelevantesDeUsuario: self session user)
+				do:[ :each | 
+					aCanvas emphasis: each titulo .
+					aCanvas paragraph: [ 
+						aCanvas text: 'Realizada por '.
+						aCanvas strong: (each usuario) nombreUsuario.
+						aCanvas text: ' | ', each 						devolverCantidadRespuestas asString , ' respuestas'
+						].
+					aCanvas text: each cantLikes asString, ' likes', ' | ', each cantDislikes asString, ' dislikes' . 
+					aCanvas horizontalRule . ].	 
+				]
+	
+]
+
+{ #category : #rendering }
+CuOOraHomeComponent >> renderLoggedUser: aCanvas [
 	aCanvas heading:'CuooRa'.
 	
 	aCanvas paragraph: [  
@@ -21,7 +47,4 @@ CuOOraHomeComponent >> renderContentOn: aCanvas [
 			callback: [self logout ];
 			with: 'Log out'.
 		].
-	aCanvas horizontalRule .
-	
-	 
 ]
