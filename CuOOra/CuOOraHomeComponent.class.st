@@ -75,16 +75,21 @@ CuOOraHomeComponent >> renderLoggedUser: aCanvas [
 { #category : #rendering }
 CuOOraHomeComponent >> renderQuestion: question with: aCanvas [
 	aCanvas emphasis: question titulo .
+	
+	aCanvas break.
+	
+	aCanvas emphasis 
+		with: [
+			aCanvas text:'Topicos: ' , (', ' join: question topicos)].
+		
 	aCanvas paragraph: [ 
 		aCanvas text: 'Realizada por '.
-		
-		
 		aCanvas anchor 
 			callback:[self goToUserDetail: question usuario];
 			with:[ aCanvas strong: (question usuario) nombreUsuario ].
-		
 		aCanvas text: ' | ', question 						devolverCantidadRespuestas asString , ' respuestas'
 		].
+	
 	aCanvas text: question cantLikes asString, ' likes', ' | ', question cantDislikes asString, ' dislikes' .
 	
 	
@@ -97,6 +102,7 @@ CuOOraHomeComponent >> renderQuestion: question with: aCanvas [
 			callback: [ self dislike: question ];
 			with: 'dislike'.
 		].
+	
 	aCanvas horizontalRule.
 		
 ]

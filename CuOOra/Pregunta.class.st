@@ -86,3 +86,8 @@ Pregunta >> titulo: title texto: text usuario: user topicos: topics [
 	topicos := topics.
 	
 ]
+
+{ #category : #accessing }
+Pregunta >> topicos [ 
+	^ topicos
+]

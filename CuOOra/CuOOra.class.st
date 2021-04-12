@@ -73,7 +73,9 @@ CuOOra >> agregarRespuestaDeUsuario: user aPregunta: preg conTexto: text [
 
 { #category : #topicos }
 CuOOra >> agregarTopicoConNombre: nom descripcion: desc [
-	topicos add: (Topico nombre: nom descripcion: desc)
+	(topicos anySatisfy: [ :topico | topico nombre = nom ])
+	ifTrue: [ ^ self ].
+	^ topicos add: (Topico nombre: nom descripcion: desc)
 ]
 
 { #category : #usuarios }
@@ -98,7 +100,7 @@ CuOOra >> borrarPregunta: pregunta [
 CuOOra >> crearUsuarioConNombre: nom contraseña: password [
 	(usuarios anySatisfy: [ :usuario | usuario nombreUsuario = nom ])
 	ifTrue: [ ^ self ].
-	usuarios add: (Usuario nombreUsuario: nom contraseña: password)
+	^ usuarios add: (Usuario nombreUsuario: nom contraseña: password)
 ]
 
 { #category : #usuarios }
