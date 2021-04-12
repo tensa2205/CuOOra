@@ -11,6 +11,15 @@ CuOOraHomeComponent >> dislike: question [
 ]
 
 { #category : #callbacks }
+CuOOraHomeComponent >> goToQuestionDetail: question [ 
+	self
+		call:(
+			QuestionDetailComponent new 
+			pregunta: question;
+			yourself)
+]
+
+{ #category : #callbacks }
 CuOOraHomeComponent >> goToUserDetail: user [
 	self 
 		call: 
@@ -74,10 +83,11 @@ CuOOraHomeComponent >> renderLoggedUser: aCanvas [
 
 { #category : #rendering }
 CuOOraHomeComponent >> renderQuestion: question with: aCanvas [
-	aCanvas emphasis: question titulo .
-	
+	aCanvas anchor
+		callback:[ self goToQuestionDetail: question];
+		with:[ aCanvas emphasis: (question titulo) ].
+		
 	aCanvas break.
-	
 	aCanvas emphasis 
 		with: [
 			aCanvas text:'Topicos: ' , (', ' join: question topicos)].
@@ -90,19 +100,22 @@ CuOOraHomeComponent >> renderQuestion: question with: aCanvas [
 		aCanvas text: ' | ', question 						devolverCantidadRespuestas asString , ' respuestas'
 		].
 	
-	aCanvas text: question cantLikes asString, ' likes', ' | ', question cantDislikes asString, ' dislikes' .
-	
+	self renderReactionsOn: aCanvas with: question.
+	aCanvas horizontalRule.
+		
+]
+
+{ #category : #rendering }
+CuOOraHomeComponent >> renderReactionsOn: aCanvas with: aPost [
+	aCanvas text: aPost cantLikes asString, ' likes', ' | ', aPost cantDislikes asString, ' dislikes' .
 	
 	aCanvas paragraph:[
 		aCanvas anchor 
-			callback: [ self like: question ];
+			callback: [ self like: aPost ];
 			with: 'like'.
 		aCanvas text: ' | '.
 		aCanvas anchor 
-			callback: [ self dislike: question ];
+			callback: [ self dislike: aPost ];
 			with: 'dislike'.
 		].
-	
-	aCanvas horizontalRule.
-		
 ]

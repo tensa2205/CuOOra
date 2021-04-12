@@ -63,12 +63,13 @@ CuOOra >> agregarPreguntaATopico: topics yUsuario: user conTitulo: title conDesc
 	| preg |
 	preg := Pregunta titulo: title texto: desc usuario: user topicos: topics.
 	user registrarPregunta: preg.
-	topics do: [ :topic | topic registrarPregunta: preg ]
+	topics do: [ :topic | topic registrarPregunta: preg ].
+	^ preg
 ]
 
 { #category : #accessing }
 CuOOra >> agregarRespuestaDeUsuario: user aPregunta: preg conTexto: text [
-	preg agregarRespuestaConTexto: text usuario: user
+	(preg agregarRespuestaConTexto: text usuario: user )
 ]
 
 { #category : #topicos }

@@ -26,6 +26,7 @@ NewQuestionComponent >> renderButtonsOn: aCanvas [
 	aCanvas button 
 		callback: [ self goBackHome  ];
 		with: 'Cancelar'.
+	aCanvas space: 5.
 	aCanvas submitButton 
 		callback: [ self registrar ];
 		with: 'Guardar'
