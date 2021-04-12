@@ -61,7 +61,7 @@ CuOOra >> addUser: anUser [
 { #category : #accessing }
 CuOOra >> agregarPreguntaATopico: topics yUsuario: user conTitulo: title conDescripcion: desc [
 	| preg |
-	preg := Pregunta titulo: title texto: desc usuario: user.
+	preg := Pregunta titulo: title texto: desc usuario: user topicos: topics.
 	user registrarPregunta: preg.
 	topics do: [ :topic | topic registrarPregunta: preg ]
 ]

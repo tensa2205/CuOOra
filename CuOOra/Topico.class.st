@@ -41,6 +41,11 @@ Topico class >> nombre: nom  descripcion: desc [
 	^ self new nombre: nom descripcion: desc
 ]
 
+{ #category : #converting }
+Topico >> asString [ 
+	^ self nombre 
+]
+
 { #category : #accessing }
 Topico >> bajaPregunta: pregunta [
 	preguntas remove: pregunta ifAbsent: [ false ].

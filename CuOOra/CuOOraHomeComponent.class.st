@@ -9,10 +9,19 @@ CuOOraHomeComponent >> logout [
 	self call: (LoginComponent new logout ; yourself)
 ]
 
+{ #category : #callbacks }
+CuOOraHomeComponent >> newQuestion [
+	self call: NewQuestionComponent new.
+]
+
 { #category : #rendering }
 CuOOraHomeComponent >> renderContentOn: aCanvas [
 	self renderLoggedUser: aCanvas.
 	aCanvas horizontalRule .
+	aCanvas anchor
+		callback: [ self newQuestion  ];
+		with: 'HACE UNA NUEVA PREGUNTA FLACO.'.
+	aCanvas break.
 	self renderLastQuestions: aCanvas.
 ]
 
