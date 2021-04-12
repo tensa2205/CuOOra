@@ -128,6 +128,8 @@ Usuario >> seguidos [
 
 { #category : #accessing }
 Usuario >> seguirUsuario: user [
+	(seguidos includes: user)
+	ifTrue: [ ^ self ].
 	seguidos add: user
 ]
 

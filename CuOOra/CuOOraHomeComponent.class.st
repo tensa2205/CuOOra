@@ -5,6 +5,27 @@ Class {
 }
 
 { #category : #callbacks }
+CuOOraHomeComponent >> dislike: question [ 
+	question darDislike: (self session user)  
+	
+]
+
+{ #category : #callbacks }
+CuOOraHomeComponent >> goToUserDetail: user [
+	self 
+		call: 
+			(UserDetailComponent new 
+				usuario: user;
+				yourself)
+]
+
+{ #category : #callbacks }
+CuOOraHomeComponent >> like: question [ 
+	question darLike: (self session user)  
+	
+]
+
+{ #category : #callbacks }
 CuOOraHomeComponent >> logout [
 	self call: (LoginComponent new logout ; yourself)
 ]
@@ -56,10 +77,26 @@ CuOOraHomeComponent >> renderQuestion: question with: aCanvas [
 	aCanvas emphasis: question titulo .
 	aCanvas paragraph: [ 
 		aCanvas text: 'Realizada por '.
-		aCanvas strong: (question usuario) nombreUsuario.
+		
+		
+		aCanvas anchor 
+			callback:[self goToUserDetail: question usuario];
+			with:[ aCanvas strong: (question usuario) nombreUsuario ].
+		
 		aCanvas text: ' | ', question 						devolverCantidadRespuestas asString , ' respuestas'
 		].
 	aCanvas text: question cantLikes asString, ' likes', ' | ', question cantDislikes asString, ' dislikes' .
-	aCanvas horizontalRule.
 	
+	
+	aCanvas paragraph:[
+		aCanvas anchor 
+			callback: [ self like: question ];
+			with: 'like'.
+		aCanvas text: ' | '.
+		aCanvas anchor 
+			callback: [ self dislike: question ];
+			with: 'dislike'.
+		].
+	aCanvas horizontalRule.
+		
 ]
