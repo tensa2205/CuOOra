@@ -1,11 +1,11 @@
 Class {
-	#name : #LoginComponent,
-	#superclass : #AccessGrantingComponent,
+	#name : #LoginComponentWithStyle,
+	#superclass : #AccessGrantingComponentWithStyle,
 	#category : #'CuOOra-ui'
 }
 
 { #category : #'app-initialization' }
-LoginComponent class >> initialize [
+LoginComponentWithStyle class >> initialize [
 	| application |
 	application := WAAdmin register: self asApplicationAt: 'CuOOra'.
 	application sessionClass: SessionWithUser .
@@ -13,7 +13,7 @@ LoginComponent class >> initialize [
 ]
 
 { #category : #callbacks }
-LoginComponent >> login [
+LoginComponentWithStyle >> login [
 	(self model autenticarUsuarioConNombre: userName  protegidoPor: password ) "Si existe dicho usuario, lo devuelve"
 		ifNotNil: [ :it | self proceedWith: it ]. "Supongamos que it debe ser el usuario (?"
 	userName := nil.
@@ -21,18 +21,18 @@ LoginComponent >> login [
 ]
 
 { #category : #callbacks }
-LoginComponent >> logout [
+LoginComponentWithStyle >> logout [
 	self session unregister.
 	self requestContext redirectTo: self application url
 ]
 
 { #category : #callbacks }
-LoginComponent >> registerNewUser [
+LoginComponentWithStyle >> registerNewUser [
 	self call: RegisterComponent new.
 ]
 
 { #category : #rendering }
-LoginComponent >> renderButtonsOn: aCanvas [
+LoginComponentWithStyle >> renderButtonsOn: aCanvas [
 	self renderSignInButtonOn: aCanvas.
 	aCanvas horizontalRule.
 	aCanvas paragraph: 'No tenes una cuenta?'.
@@ -40,16 +40,18 @@ LoginComponent >> renderButtonsOn: aCanvas [
 ]
 
 { #category : #rendering }
-LoginComponent >> renderSignInButtonOn: aCanvas [
+LoginComponentWithStyle >> renderSignInButtonOn: aCanvas [
 	aCanvas space: 25.
-	aCanvas submitButton 
+	aCanvas submitButton
+		class: 'btn btn-primary';
 		callback: [ self login ];
 		with: 'Iniciar sesion'
 ]
 
 { #category : #rendering }
-LoginComponent >> renderSignUpButtonOn: aCanvas [
+LoginComponentWithStyle >> renderSignUpButtonOn: aCanvas [
 	aCanvas submitButton 
+	class: 'btn btn-success';
 		callback: [ self registerNewUser ];
 		with: 'Registrate, ES GRATAROLA'
 ]

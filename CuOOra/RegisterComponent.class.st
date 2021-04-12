@@ -1,8 +1,13 @@
 Class {
 	#name : #RegisterComponent,
-	#superclass : #AccessGrantingComponent,
+	#superclass : #AccessGrantingComponentWithStyle,
 	#category : #'CuOOra-ui'
 }
+
+{ #category : #callbacks }
+RegisterComponent >> goBackHome [
+	self answer
+]
 
 { #category : #rendering }
 RegisterComponent >> registerAndLogin [
@@ -20,6 +25,11 @@ RegisterComponent >> renderButtonsOn: aCanvas [
 { #category : #rendering }
 RegisterComponent >> renderSignUpButtonOn: aCanvas [
 	aCanvas submitButton 
+		class: 'btn btn-success';
 		callback: [ self registerAndLogin ];
-		with: 'Registrarse'
+		with: 'Registrarse'.
+	aCanvas cancelButton 
+		class: 'btn btn-danger'; 
+		callback: [ self goBackHome  ];
+		with: 'Cancelar'.
 ]

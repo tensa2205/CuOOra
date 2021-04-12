@@ -6,7 +6,7 @@ Class {
 
 { #category : #callbacks }
 CuOOraHomeComponent >> logout [
-	self call: (LoginComponent new logout ; yourself)
+	self call: (LoginComponentWithStyle new logout ; yourself)
 ]
 
 { #category : #callbacks }
@@ -18,7 +18,8 @@ CuOOraHomeComponent >> newQuestion [
 CuOOraHomeComponent >> renderContentOn: aCanvas [
 	self renderLoggedUser: aCanvas.
 	aCanvas horizontalRule .
-	aCanvas anchor
+	aCanvas anchor 
+		class: 'btn btn-secondary btn-lg ml-5 mb-4';
 		callback: [ self newQuestion  ];
 		with: 'HACE UNA NUEVA PREGUNTA FLACO.'.
 	aCanvas break.
@@ -27,7 +28,7 @@ CuOOraHomeComponent >> renderContentOn: aCanvas [
 
 { #category : #rendering }
 CuOOraHomeComponent >> renderLastQuestions: aCanvas [
-	aCanvas heading: 'Ultimas preguntas'.
+	aCanvas heading level:2 ; with: 'Ultimas preguntas'.
 	aCanvas
 		unorderedList: [ 
 			((CuOOra soleInstance) obtenerPreguntasRelevantesDeUsuario: self session user)
@@ -56,4 +57,11 @@ CuOOraHomeComponent >> renderLoggedUser: aCanvas [
 			callback: [self logout ];
 			with: 'Log out'.
 		].
+]
+
+{ #category : #updating }
+CuOOraHomeComponent >> updateRoot: anHtmlRoot [
+    super updateRoot: anHtmlRoot.
+    anHtmlRoot stylesheet url: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+	
 ]

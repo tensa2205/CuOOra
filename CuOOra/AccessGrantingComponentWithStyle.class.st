@@ -1,5 +1,5 @@
 Class {
-	#name : #AccessGrantingComponent,
+	#name : #AccessGrantingComponentWithStyle,
 	#superclass : #WAComponent,
 	#instVars : [
 		'userName',
@@ -9,33 +9,33 @@ Class {
 }
 
 { #category : #model }
-AccessGrantingComponent >> model [
+AccessGrantingComponentWithStyle >> model [
 	^ CuOOra soleInstance 
 ]
 
 { #category : #accessing }
-AccessGrantingComponent >> password [
+AccessGrantingComponentWithStyle >> password [
 	^ password 
 ]
 
 { #category : #accessing }
-AccessGrantingComponent >> password: anPassword [
+AccessGrantingComponentWithStyle >> password: anPassword [
 	password := anPassword 
 ]
 
 { #category : #private }
-AccessGrantingComponent >> proceedWith: aUser [
+AccessGrantingComponentWithStyle >> proceedWith: aUser [
 	self session user: aUser.
 	self call: CuOOraHomeComponent new
 ]
 
 { #category : #rendering }
-AccessGrantingComponent >> renderButtonsOn: aCanvas [
+AccessGrantingComponentWithStyle >> renderButtonsOn: aCanvas [
 	self subclassResponsibility 
 ]
 
 { #category : #rendering }
-AccessGrantingComponent >> renderContentOn: aCanvas [
+AccessGrantingComponentWithStyle >> renderContentOn: aCanvas [
 	aCanvas heading: 'CuOOra'.
 	aCanvas
 		form: [ 
@@ -45,7 +45,7 @@ AccessGrantingComponent >> renderContentOn: aCanvas [
 ]
 
 { #category : #rendering }
-AccessGrantingComponent >> renderInputElementsOn: aCanvas [
+AccessGrantingComponentWithStyle >> renderInputElementsOn: aCanvas [
 	aCanvas paragraph: [ 
 		aCanvas label: 'Usuario:'.
 		aCanvas space: 10.
@@ -63,12 +63,18 @@ AccessGrantingComponent >> renderInputElementsOn: aCanvas [
 	
 ]
 
+{ #category : #updating }
+AccessGrantingComponentWithStyle >> updateRoot: anHtmlRoot [
+    super updateRoot: anHtmlRoot.
+    anHtmlRoot stylesheet url: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+]
+
 { #category : #accessing }
-AccessGrantingComponent >> userName [
+AccessGrantingComponentWithStyle >> userName [
 	^ userName
 ]
 
 { #category : #accessing }
-AccessGrantingComponent >> userName: anUsername [
+AccessGrantingComponentWithStyle >> userName: anUsername [
 	userName := anUsername 
 ]

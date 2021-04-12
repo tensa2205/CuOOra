@@ -23,10 +23,12 @@ NewQuestionComponent >> registrar [
 
 { #category : #rendering }
 NewQuestionComponent >> renderButtonsOn: aCanvas [
-	aCanvas button 
+	aCanvas button
+		class:'btn btn-danger ml-4'; 
 		callback: [ self goBackHome  ];
 		with: 'Cancelar'.
 	aCanvas submitButton 
+		class:'btn btn-success ml-3';
 		callback: [ self registrar ];
 		with: 'Guardar'
 ]
@@ -47,36 +49,37 @@ NewQuestionComponent >> renderContentOn: aCanvas [
 { #category : #rendering }
 NewQuestionComponent >> renderInputElementsOn: aCanvas [
 		
-		aCanvas paragraph: [ 
-			aCanvas label: 'Titulo:' ].
-		aCanvas paragraph: [ 
-			aCanvas space: 10.
-			aCanvas textArea
-				columns: 80;
-				rows: 3;
-				callback: [ :valorNuevo | self titulo: valorNuevo ];
-				with: 'Escriba aqui el titulo de su pregunta.' ].
-	
-		aCanvas break.
 		
-		aCanvas paragraph: [ 
-			aCanvas label: 'Desarrollo:' ].
-		aCanvas paragraph: [ 
-			aCanvas space: 10.
-			aCanvas textArea
-				columns:80;
-				rows:7;
-				callback: [ :valorNuevo | self texto: valorNuevo ];
-				with: 'Escriba aqui el desarrollo de su pregunta.' ].
+		 aCanvas div
+			class: 'form-group col-6';
+			with:[
+			 	aCanvas text: 'Titulo'.
+		  		aCanvas textInput 
+				class: 'form-control required ml-4';	
+				callback: [ :valorNuevo | self titulo: valorNuevo ]].
+				aCanvas break.	
 		
-		aCanvas paragraph:[
-			aCanvas label:'Topicos:'].
-		aCanvas space: 10.
-		aCanvas multiSelect
- 			list: (CuOOra soleInstance) topicos ;
- 			selected: topicos;
- 			callback: [ :valores | self topicos: valores ].
-	
+		 aCanvas div
+			class: 'form-group col-6';
+			with:[
+			 	aCanvas text: 'Descripcion'.
+		  		aCanvas textArea 
+				class: 'form-control required ml-4';	
+				rows:4;
+				callback: [ :valorNuevo | self texto: valorNuevo ]].
+				aCanvas break.	
+					
+		 aCanvas div
+			class: 'form-group col-2';
+			with:[
+				aCanvas text:'Seleccione topicos'.
+				aCanvas multiSelect
+					class:'form-control ml-4';
+ 					list: (CuOOra soleInstance) topicos ;
+ 					selected: topicos;
+ 					callback: [ :valores | self topicos: valores ].
+				]
+						
 ]
 
 { #category : #accessing }
@@ -107,4 +110,11 @@ NewQuestionComponent >> topicos [
 { #category : #accessing }
 NewQuestionComponent >> topicos: topics [ 
 	topicos := topics
+]
+
+{ #category : #updating }
+NewQuestionComponent >> updateRoot: anHtmlRoot [
+    super updateRoot: anHtmlRoot.
+    anHtmlRoot stylesheet url: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+	
 ]
