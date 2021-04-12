@@ -32,15 +32,8 @@ CuOOraHomeComponent >> renderLastQuestions: aCanvas [
 		unorderedList: [ 
 			((CuOOra soleInstance) obtenerPreguntasRelevantesDeUsuario: self session user)
 				do:[ :each | 
-					aCanvas emphasis: each titulo .
-					aCanvas paragraph: [ 
-						aCanvas text: 'Realizada por '.
-						aCanvas strong: (each usuario) nombreUsuario.
-						aCanvas text: ' | ', each 						devolverCantidadRespuestas asString , ' respuestas'
-						].
-					aCanvas text: each cantLikes asString, ' likes', ' | ', each cantDislikes asString, ' dislikes' . 
-					aCanvas horizontalRule . ].	 
-				]
+					(self renderQuestion: each with: aCanvas)].
+		].
 	
 ]
 
@@ -56,4 +49,17 @@ CuOOraHomeComponent >> renderLoggedUser: aCanvas [
 			callback: [self logout ];
 			with: 'Log out'.
 		].
+]
+
+{ #category : #rendering }
+CuOOraHomeComponent >> renderQuestion: question with: aCanvas [
+	aCanvas emphasis: question titulo .
+	aCanvas paragraph: [ 
+		aCanvas text: 'Realizada por '.
+		aCanvas strong: (question usuario) nombreUsuario.
+		aCanvas text: ' | ', question 						devolverCantidadRespuestas asString , ' respuestas'
+		].
+	aCanvas text: question cantLikes asString, ' likes', ' | ', question cantDislikes asString, ' dislikes' .
+	aCanvas horizontalRule.
+	
 ]

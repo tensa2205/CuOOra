@@ -1,6 +1,6 @@
 Class {
 	#name : #NewQuestionComponent,
-	#superclass : #WAComponent,
+	#superclass : #CuOOraHomeComponent,
 	#instVars : [
 		'titulo',
 		'texto',
@@ -33,7 +33,7 @@ NewQuestionComponent >> renderButtonsOn: aCanvas [
 
 { #category : #rendering }
 NewQuestionComponent >> renderContentOn: aCanvas [
-	aCanvas heading: 'CuOOra'.
+	self renderLoggedUser: aCanvas.
 	aCanvas horizontalRule .
 	aCanvas heading level:2 ; with: 'Nueva pregunta'.
 	aCanvas form:[
