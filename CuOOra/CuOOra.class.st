@@ -48,16 +48,6 @@ CuOOra class >> soleInstance [
 	^ soleInstance 
 ]
 
-{ #category : #temporal }
-CuOOra >> addTopic: anTopic [
-	topicos add: anTopic
-]
-
-{ #category : #temporal }
-CuOOra >> addUser: anUser [
-	usuarios add: anUser.
-]
-
 { #category : #accessing }
 CuOOra >> agregarPreguntaATopico: topics yUsuario: user conTitulo: title conDescripcion: desc [
 	| preg |
