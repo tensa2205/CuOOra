@@ -51,7 +51,7 @@ CuOOra class >> soleInstance [
 { #category : #accessing }
 CuOOra >> agregarPreguntaATopico: topics yUsuario: user conTitulo: title conDescripcion: desc [
 	| preg |
-	preg := Pregunta titulo: title texto: desc usuario: user topicos: topics.
+	preg := Pregunta titulo: title texto: desc usuario: user.
 	user registrarPregunta: preg.
 	topics do: [ :topic | topic registrarPregunta: preg ].
 	^ preg
@@ -140,6 +140,11 @@ CuOOra >> obtenerRespuestasHechasDeUsuario: user [
 	"Reject then Collect lo que hace es ver la colección de tal forma que estén todos los usuarios menos aquel usuario donde usuarioRechazar == user haya evaluado true.
 	Esto permite que se procesen todos los usuarios excepto el usuario que pasamos como parámetro (de tal forma que no tomemos respuestas a preguntas que hizo el mismo usuario)."
 	^ (usuarios reject: [ : usuarioRechazar | usuarioRechazar == user ] thenCollect: [ : usuario | usuario devolverRespuestasDeUsuarioEspecifico: user ]) flatCollect: [ : each | each ]
+]
+
+{ #category : #accessing }
+CuOOra >> obtenerTopicosDePregunta: preg [
+	^ (topicos select: [:topico | topico tienePregunta: preg]) collect: [ :each | each nombre ]
 ]
 
 { #category : #accessing }

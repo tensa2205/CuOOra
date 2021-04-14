@@ -29,8 +29,7 @@ Class {
 	#superclass : #Post,
 	#instVars : [
 		'titulo',
-		'respuestas',
-		'topicos'
+		'respuestas'
 	],
 	#category : #'CuOOra-model'
 }
@@ -38,11 +37,6 @@ Class {
 { #category : #constructor }
 Pregunta class >> titulo: arg1 texto: arg2 usuario: arg3 [
 	^ self new titulo: arg1 texto: arg2 usuario: arg3
-]
-
-{ #category : #constructor }
-Pregunta class >> titulo: arg1 texto: arg2 usuario: arg3 topicos: topics [
-	^ self new titulo: arg1 texto: arg2 usuario: arg3 topicos: topics
 ]
 
 { #category : #accessing }
@@ -64,7 +58,6 @@ Pregunta >> devolverRespuestasUsuario: user [
 Pregunta >> initialize [
 	super initialize.
 	respuestas := OrderedCollection new.
-	topicos := OrderedCollection new.
 ]
 
 { #category : #accessing }
@@ -78,16 +71,10 @@ Pregunta >> titulo [
 ]
 
 { #category : #constructor }
-Pregunta >> titulo: title texto: text usuario: user topicos: topics [ 
+Pregunta >> titulo: title texto: text usuario: user [
 	self initialize.
 	titulo := title.
 	texto := text.
 	usuario := user.
-	topicos := topics.
 	
-]
-
-{ #category : #accessing }
-Pregunta >> topicos [ 
-	^ topicos
 ]

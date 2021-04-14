@@ -2,7 +2,10 @@ Class {
 	#name : #TestCuOOra,
 	#superclass : #TestCase,
 	#instVars : [
-		'sistema'
+		'sistema',
+		'topico',
+		'user1',
+		'user2'
 	],
 	#category : #'CuOOra-tests'
 }
@@ -10,6 +13,9 @@ Class {
 { #category : #running }
 TestCuOOra >> setUp [
 	sistema := CuOOra new.
+	topico := sistema agregarTopicoConNombre: 'General' descripcion: 'Discusión General'.
+	user1 := sistema crearUsuarioConNombre: 'El pepe' contraseña: '1'.
+	user2 := sistema crearUsuarioConNombre: 'La moni' contraseña: '2'.
 	
 	
 	
@@ -18,13 +24,8 @@ TestCuOOra >> setUp [
 
 { #category : #tests }
 TestCuOOra >> testAgregarPreguntaTopico [
-	|topicAux|
-	sistema agregarTopicoConNombre: 'General' descripcion: 'Foro de discusion general'.
-	sistema crearUsuarioConNombre: 'El pepe' contraseña: '123'. 
-	sistema agregarPreguntaATopico: sistema topicos yUsuario: sistema usuarios first  conTitulo: 'p1'  conDescripcion: 'dp1'.
-	
-	topicAux := sistema topicos first.
-	self assert: topicAux preguntas size equals: 1
+	sistema agregarPreguntaATopico: sistema topicos yUsuario: user1  conTitulo: 'p1'  conDescripcion: 'dp1'.
+	self assert: topico preguntas size equals: 1
 ]
 
 { #category : #tests }
@@ -35,36 +36,20 @@ TestCuOOra >> testCrearTopico [
 
 { #category : #tests }
 TestCuOOra >> testCrearUsuario [
-	sistema crearUsuarioConNombre: 'El pepe' contraseña: '123'.
-	sistema crearUsuarioConNombre: 'La moni' contraseña: '456'.
 	self assert: (sistema usuarios) size equals: 2.
 	
 ]
 
 { #category : #tests }
 TestCuOOra >> testDevolverPuntajeDeUsuario [
-	|pepe moni topics respuestas p1 p2 p3 p4 r1 r2|
-	sistema agregarTopicoConNombre: 'General' descripcion: 'Un topico'.
-	sistema 
-		crearUsuarioConNombre: 'El pepe' contraseña: '1';
-		crearUsuarioConNombre: 'La moni' contraseña: '2'. 
-	
-	pepe := sistema usuarios at: 1.
-	moni := sistema usuarios at: 2.
-	
+	|topics p1 p2 p3 p4 r1 r2|
 	topics := sistema topicos.
-	
-	"Preguntas y obtenciones de las mismas."
-	sistema 
-		agregarPreguntaATopico: topics yUsuario: moni  conTitulo: 'Contesten' conDescripcion: 'UwU' ; "p1"
-		agregarPreguntaATopico: topics yUsuario: moni  conTitulo: 'Contesten mi segunda' conDescripcion: 'UwU v2'; "p2"
-		agregarPreguntaATopico: topics yUsuario: pepe  conTitulo: 'Stop it moni, get some help' conDescripcion: 'Vea el titulo'; "p3"
-		agregarPreguntaATopico: topics yUsuario: pepe  conTitulo: 'Les paso este temazo' conDescripcion: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'. "p4" 
-	
-	p1 := topics first preguntas at:  1.
-	p2 := topics first preguntas at:  2.
-	p3 := topics first preguntas at:  3.
-	p4 := topics first preguntas at:  4.
+			
+	p1 := sistema agregarPreguntaATopico: topics yUsuario: user2  conTitulo: 'Contesten' conDescripcion: 'UwU'.
+	p2 := sistema agregarPreguntaATopico: topics yUsuario: user2  conTitulo: 'Contesten mi segunda' conDescripcion: 'UwU v2'.
+	p3 := sistema agregarPreguntaATopico: topics yUsuario: user1  conTitulo: 'Stop it moni, get some help' conDescripcion: 'Vea el titulo'.
+	p4 := sistema agregarPreguntaATopico: topics yUsuario: user1  conTitulo: 'Les paso este temazo' conDescripcion: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'.
+		
 	
 	p3
 		darLike: '1';
@@ -85,19 +70,10 @@ TestCuOOra >> testDevolverPuntajeDeUsuario [
 		darDislike: '7'.
 	
 	"Respuestas y obtenciones de las mismas."
-	sistema
-		agregarRespuestaDeUsuario: pepe aPregunta: p1 conTexto: 'Contesto pregunta 1, over';
-		agregarRespuestaDeUsuario: pepe aPregunta: p2 conTexto: 'Contesto pregunta 2, over';
-		agregarRespuestaDeUsuario: pepe aPregunta: p3 conTexto: 'Esta respuesta no deberia contar en el puntaje.'.
+	r1 := sistema agregarRespuestaDeUsuario: user1 aPregunta: p1 conTexto: 'Contesto pregunta 1, over'.
+	r2 := sistema agregarRespuestaDeUsuario: user1 aPregunta: p2 conTexto: 'Contesto pregunta 2, over'.
+	sistema agregarRespuestaDeUsuario: user1 aPregunta: p3 conTexto: 'Esta respuesta no deberia contar en el puntaje.'.
 	
-	respuestas := sistema obtenerRespuestasHechasDeUsuario: pepe.
-	self assert: respuestas size equals: 2.
-	
-	r1 := respuestas at: 1.
-	r2 := respuestas at: 2.
-	self 
-		assert: r1 texto equals: 'Contesto pregunta 1, over';
-		assert: r2 texto equals: 'Contesto pregunta 2, over'.
 	r1
 		darLike: '1';
 		darLike: '2'.
@@ -105,7 +81,7 @@ TestCuOOra >> testDevolverPuntajeDeUsuario [
 		darLike: '1';
 		darLike: '2'.
 	
-	self assert: (sistema devolverPuntajeDeUsuario: pepe) equals: 150
+	self assert: (sistema devolverPuntajeDeUsuario: user1) equals: 150
 	
 	
 	  
@@ -113,40 +89,37 @@ TestCuOOra >> testDevolverPuntajeDeUsuario [
 
 { #category : #tests }
 TestCuOOra >> testObtenerRespuestasUsuario [
-	| u1 u2 p1 p2 p3 preguntasTopico respuestas|
-	sistema agregarTopicoConNombre: 'General' descripcion: 'Discusion general'.
+	|p1 p2 p3 respuestas|
+		 	
+	p1 := sistema agregarPreguntaATopico: sistema topicos yUsuario: user1 conTitulo: 'Primer pregunta' conDescripcion: 'd1'.
+	p2 := sistema agregarPreguntaATopico: sistema topicos yUsuario: user1 conTitulo: 'Segunda pregunta' conDescripcion: 'd2'.
+	p3 := sistema agregarPreguntaATopico: sistema topicos yUsuario: user2 conTitulo: 'Tercer pregunta' conDescripcion: 'd3'.
+		
 	sistema 
-		crearUsuarioConNombre: 'User1' contraseña: '1';
-		crearUsuarioConNombre: 'User2' contraseña: '2'.
+		agregarRespuestaDeUsuario: user2 aPregunta: p1 conTexto: 'Respuesta p1';
+		agregarRespuestaDeUsuario: user2 aPregunta: p2 conTexto: 'Respuesta p2';
+		agregarRespuestaDeUsuario: user2 aPregunta: p3 conTexto: 'Respuesta p3'.
 	
-	u1 := sistema usuarios at: 1.
-	u2 := sistema usuarios at: 2.
-	
-	sistema 
-		agregarPreguntaATopico: sistema topicos yUsuario: u1 conTitulo: 'Primer pregunta' conDescripcion: 'd1';
-		agregarPreguntaATopico: sistema topicos yUsuario: u1 conTitulo: 'Segunda pregunta' conDescripcion: 'd2';
-	 	agregarPreguntaATopico: sistema topicos yUsuario: u2 conTitulo: 'Tercer pregunta' conDescripcion: 'd3'.
-	
-	preguntasTopico := (sistema topicos first) preguntas .
-	p1 := preguntasTopico at: 1.
-	p2 := preguntasTopico at: 2.
-	p3 := preguntasTopico at: 3.
-	self 
-		assert: p1 titulo equals: 'Primer pregunta';
-		assert: p2 titulo equals: 'Segunda pregunta';
-		assert: p3 titulo equals: 'Tercer pregunta'.
-	
-	sistema 
-		agregarRespuestaDeUsuario: u2 aPregunta: p1 conTexto: 'Respuesta p1';
-		agregarRespuestaDeUsuario: u2 aPregunta: p2 conTexto: 'Respuesta p2';
-		agregarRespuestaDeUsuario: u2 aPregunta: p3 conTexto: 'Respuesta p3'.
-	
-	respuestas := sistema obtenerRespuestasHechasDeUsuario: u2.
-	self assert: (respuestas at: 1) texto equals:'Respuesta p1'.
-	self assert: (respuestas at: 2) texto equals:'Respuesta p2'.
+	respuestas := sistema obtenerRespuestasHechasDeUsuario: user2.
 	
 	self assert: respuestas size equals:2
 		
 	
 	
+]
+
+{ #category : #tests }
+TestCuOOra >> testObtenerTopicosDePregunta [
+	| t2 colec pregunta|
+	t2 := sistema agregarTopicoConNombre: 'Soy el segundo topico' descripcion: 'Yo cuento en los calculos!!!'.
+	sistema agregarTopicoConNombre: 'Soy el tercer topico' descripcion: 'Yo no cuento en los calculos.'.
+	
+	colec := OrderedCollection new.
+	colec
+		add:topico;
+		add:t2.
+	
+	pregunta := sistema agregarPreguntaATopico: colec yUsuario: user1 conTitulo: 'Me estan testeando' conDescripcion: 'Wiii'.
+	
+	self assert: (sistema obtenerTopicosDePregunta: pregunta)  size equals: 2
 ]

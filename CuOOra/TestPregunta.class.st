@@ -4,13 +4,15 @@ Class {
 	#instVars : [
 		'p1',
 		'res1',
-		'res2'
+		'res2',
+		'user'
 	],
 	#category : #'CuOOra-tests'
 }
 
 { #category : #running }
 TestPregunta >> setUp [
+	user := Usuario nombreUsuario: 'El pepe' contraseña: '1' .
 	p1 := Pregunta titulo: 'Hola' texto: 'Mundo' usuario: 'Pepe'.
 	
 	p1 agregarRespuestaConTexto: 'xxxxxxx' usuario: 'Diego'.
@@ -19,11 +21,11 @@ TestPregunta >> setUp [
 
 { #category : #tests }
 TestPregunta >> testAgregarRespuesta [
-	| user |
-	user := Usuario nombreUsuario: 'El pepe' contraseña: '1' .
 	self assert: p1 respuestas size equals: 2.
 	p1 agregarRespuestaConTexto: 'Sigue adelante' usuario: user.
-	self assert: p1 respuestas size equals: 3
+	self 
+		assert: p1 respuestas size equals: 3;
+		assert: (p1 respuestas at: 3) texto equals: 'Sigue adelante'.
 ]
 
 { #category : #tests }

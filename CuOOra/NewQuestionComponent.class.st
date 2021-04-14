@@ -3,8 +3,7 @@ Class {
 	#superclass : #CuOOraHomeComponent,
 	#instVars : [
 		'titulo',
-		'texto',
-		'topicos'
+		'texto'
 	],
 	#category : #'CuOOra-ui'
 }
@@ -73,10 +72,10 @@ NewQuestionComponent >> renderInputElementsOn: aCanvas [
 		aCanvas paragraph:[
 			aCanvas label:'Topicos:'].
 		aCanvas space: 10.
-		aCanvas multiSelect
+		"aCanvas multiSelect
  			list: (CuOOra soleInstance) topicos ;
  			selected: topicos;
- 			callback: [ :valores | self topicos: valores ].
+ 			callback: [ :valores | self topicos: valores ]."
 	
 ]
 
@@ -98,14 +97,4 @@ NewQuestionComponent >> titulo [
 { #category : #accessing }
 NewQuestionComponent >> titulo: title [ 
 	titulo := title
-]
-
-{ #category : #accessing }
-NewQuestionComponent >> topicos [
-	^ topicos 
-]
-
-{ #category : #accessing }
-NewQuestionComponent >> topicos: topics [ 
-	topicos := topics
 ]

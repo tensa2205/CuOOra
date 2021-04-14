@@ -82,3 +82,8 @@ Topico >> preguntas [
 Topico >> registrarPregunta: pregunta [ 
 	preguntas add: pregunta
 ]
+
+{ #category : #accessing }
+Topico >> tienePregunta: preg [ 
+	^ (preguntas includes: preg)
+]

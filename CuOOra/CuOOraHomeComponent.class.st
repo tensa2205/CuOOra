@@ -100,7 +100,7 @@ CuOOraHomeComponent >> renderQuestion: question with: aCanvas [
 	aCanvas break.
 	aCanvas emphasis 
 		with: [
-			aCanvas text:'Topicos: ' , (', ' join: question topicos)].
+			aCanvas text:'Topicos: ' , (', ' join: (self model obtenerTopicosDePregunta: question))].
 		
 	aCanvas paragraph: [ 
 		aCanvas text: 'Realizada por '.
