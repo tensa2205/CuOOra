@@ -44,7 +44,7 @@ CuOOra class >> clearSoleInstance [
 
 { #category : #'instance creation' }
 CuOOra class >> soleInstance [
-	soleInstance ifNil: [ soleInstance := self new ].
+	soleInstance ifNil: [ soleInstance := self new instanciaPrueba ].
 	^ soleInstance 
 ]
 
@@ -113,6 +113,41 @@ CuOOra >> devolverPuntajeDeUsuario: user [
 CuOOra >> initialize [
 	usuarios := OrderedCollection new.
 	topicos := OrderedCollection new
+]
+
+{ #category : #'instancia-prueba' }
+CuOOra >> instanciaPrueba [
+	| pedro diego juan preguntaP preguntaD topicoOO topicoTest topicoCharlita colec1 colec2|
+	pedro := self crearUsuarioConNombre: 'pedro@cuoora.com' contraseña: 'pedro@cuoora.com'.
+	diego := self crearUsuarioConNombre: 'diego@cuoora.com' contraseña: 'diego@cuoora.com'.
+	juan := self crearUsuarioConNombre: 'juan@cuoora.com' contraseña: 'juan@cuoora.com'.
+	
+	topicoOO := self agregarTopicoConNombre: 'OO1' descripcion: 'Soy OO1'.
+	topicoTest := self agregarTopicoConNombre: 'Test de unidad' descripcion: 'Soy topico de test de unidad'.
+	topicoCharlita := self agregarTopicoConNombre: 'Smalltalk' descripcion: 'Soy smalltalk, podés llamarme... CHARLITA'.
+	
+	colec1 := OrderedCollection new.
+	colec2 := OrderedCollection new.
+	
+	colec1
+		add:topicoOO;
+		add:topicoTest.
+	colec2
+		add:topicoOO;
+		add:topicoCharlita.
+	
+	self seguirUsuario: diego conUsuario: juan. "Juan sigue a Diego"
+	self seguirUsuario: juan conUsuario: pedro. "Pedro sigue a Juan"
+	
+	
+	
+	"Pregunta de pedro"
+	preguntaP := self agregarPreguntaATopico: colec1  yUsuario: pedro conTitulo: '¿Para que sirve el metodo setUp?' conDescripcion: 'Exacto, para que me sirve.' .
+	self agregarRespuestaDeUsuario: diego aPregunta: preguntaP conTexto: 'Sirve para instanciar los objetos que son
+							evaluados por el test en un único método y que se ejecute siempre antes de cada test.'.
+	"Pregunta de diego"
+	preguntaD := self agregarPreguntaATopico: colec2  yUsuario: diego  conTitulo: '¿Que significa #messageNotUnderstood?' conDescripcion: 'No se que significa.' .
+	self agregarRespuestaDeUsuario: pedro aPregunta: preguntaD conTexto: 'Significa que el objeto que recibió el mensaje no encontró ningún método para ejecutar en respuesta.'.
 ]
 
 { #category : #topicos }

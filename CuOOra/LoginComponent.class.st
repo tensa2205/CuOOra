@@ -1,26 +1,18 @@
 "
-Expresion a evaluar para registrar la aplicacion
+""Expresion a evaluar para registrar la aplicación:""
     (WAAdmin register: LoginComponent asApplicationAt: 'CuOOra') sessionClass: SessionWithUser .
 
-Metodos para limpiar la instancia unica.
+""Para limpiar la instancia única:""
     CuOOra clearSoleInstance .
 
-Metodo para crear una instancia unica de prueba:
-    CuOOra soleInstance
+""Para crear la instancia única:""
+    CuOOra soleInstance .
 "
 Class {
 	#name : #LoginComponent,
 	#superclass : #AccessGrantingComponent,
 	#category : #'CuOOra-ui'
 }
-
-{ #category : #'app-initialization' }
-LoginComponent class >> initialize [
-	| application |
-	application := WAAdmin register: self asApplicationAt: 'CuOOra'.
-	application sessionClass: SessionWithUser .
-	
-]
 
 { #category : #callbacks }
 LoginComponent >> login [
