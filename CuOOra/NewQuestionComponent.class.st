@@ -73,7 +73,7 @@ NewQuestionComponent >> renderInputElementsOn: aCanvas [
 				columns: 80;
 				rows: 3;
 				callback: [ :valorNuevo | self titulo: valorNuevo ];
-				with: 'Escriba aqui el titulo de su pregunta.' ].
+				placeholder: 'Escriba aqui el titulo de su pregunta.' ].
 	
 		aCanvas break.
 		
@@ -85,14 +85,14 @@ NewQuestionComponent >> renderInputElementsOn: aCanvas [
 				columns:80;
 				rows:7;
 				callback: [ :valorNuevo | self texto: valorNuevo ];
-				with: 'Escriba aqui el desarrollo de su pregunta.' ].
+				placeholder: 'Escriba aqui el desarrollo de su pregunta.' ].
 		
 		aCanvas paragraph:[
 			aCanvas label:'Topicos:'.
 			aCanvas textInput 
 				size: 30;
 				callback: [:valorNuevo | self topicos: valorNuevo  ];
-				with: 'Ingrese los topicos separados por coma.'] 
+				placeholder: 'Ingrese los topicos separados por coma.'] 
 	
 ]
 

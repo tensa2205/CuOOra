@@ -49,7 +49,7 @@ NewAnswerComponent >> renderInputElementsOn: aCanvas [
 				columns:80;
 				rows:7;
 				callback: [ :valorNuevo | self texto: valorNuevo ];
-				with: 'Escriba aqui el texto de su respuesta.' ].
+				placeholder: 'Escriba aqui el texto de su respuesta.' ].
 		
 ]
 
@@ -65,6 +65,8 @@ NewAnswerComponent >> texto: text [
 
 { #category : #callbacks }
 NewAnswerComponent >> uploadAnswer [
+	(self validarRespuesta )
+	ifFalse: [ ^ self ].
 	self model agregarRespuestaDeUsuario: (self session user) aPregunta: (self pregunta) conTexto: (self texto).
 	self goBackQuestion 
 ]
@@ -77,4 +79,9 @@ NewAnswerComponent >> usuario [
 { #category : #accessing }
 NewAnswerComponent >> usuario: anUser [
 	usuario := anUser
+]
+
+{ #category : #operation }
+NewAnswerComponent >> validarRespuesta [
+	^ self texto isNotEmpty 
 ]

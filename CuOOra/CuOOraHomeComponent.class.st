@@ -58,10 +58,7 @@ CuOOraHomeComponent >> newQuestion [
 CuOOraHomeComponent >> renderContentOn: aCanvas [
 	self renderLoggedUser: aCanvas.
 	aCanvas horizontalRule .
-	aCanvas anchor
-		callback: [ self newQuestion  ];
-		with: 'HACE UNA NUEVA PREGUNTA FLACO.'.
-	aCanvas break.
+	self renderMakeACuestionOn: aCanvas.
 	self renderLastQuestions: aCanvas.
 ]
 
@@ -89,6 +86,14 @@ CuOOraHomeComponent >> renderLoggedUser: aCanvas [
 			callback: [self logout ];
 			with: 'Log out'.
 		].
+]
+
+{ #category : #rendering }
+CuOOraHomeComponent >> renderMakeACuestionOn: aCanvas [
+	aCanvas anchor
+		callback: [ self newQuestion  ];
+		with: 'Hacer una nueva pregunta'.
+	aCanvas break.
 ]
 
 { #category : #rendering }
