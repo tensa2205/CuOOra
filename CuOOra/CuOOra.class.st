@@ -59,7 +59,7 @@ CuOOra >> agregarPreguntaATopico: topics yUsuario: user conTitulo: title conDesc
 
 { #category : #accessing }
 CuOOra >> agregarRespuestaDeUsuario: user aPregunta: preg conTexto: text [
-	(preg agregarRespuestaConTexto: text usuario: user )
+	^ (preg agregarRespuestaConTexto: text usuario: user )
 ]
 
 { #category : #topicos }

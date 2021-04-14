@@ -47,7 +47,7 @@ Pregunta class >> titulo: arg1 texto: arg2 usuario: arg3 topicos: topics [
 
 { #category : #accessing }
 Pregunta >> agregarRespuestaConTexto: text usuario: user [
-	respuestas add: (Respuesta texto: text usuario: user)
+	^ respuestas add: (Respuesta texto: text usuario: user)
 ]
 
 { #category : #accessing }
