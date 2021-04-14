@@ -16,7 +16,7 @@ NewQuestionComponent >> goBackHome [
 
 { #category : #rendering }
 NewQuestionComponent >> registrar [
-	CuOOra soleInstance agregarPreguntaATopico: ((self topicos) asOrderedCollection)  yUsuario: (self session user) conTitulo: (self titulo)  conDescripcion: (self texto).
+	self model agregarPreguntaATopico: ((self topicos) asOrderedCollection)  yUsuario: (self session user) conTitulo: (self titulo)  conDescripcion: (self texto).
 	self goBackHome .
 	
 ]

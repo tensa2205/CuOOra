@@ -1,3 +1,13 @@
+"
+Expresion a evaluar para registrar la aplicacion
+    (WAAdmin register: LoginComponent asApplicationAt: 'CuOOra') sessionClass: SessionWithUser .
+
+Metodos para limpiar la instancia unica.
+    CuOOra clearSoleInstance .
+
+Metodo para crear una instancia unica de prueba:
+    CuOOra soleInstance
+"
 Class {
 	#name : #LoginComponent,
 	#superclass : #AccessGrantingComponent,
@@ -14,29 +24,16 @@ LoginComponent class >> initialize [
 
 { #category : #callbacks }
 LoginComponent >> login [
-	(self model autenticarUsuarioConNombre: userName  protegidoPor: password ) "Si existe dicho usuario, lo devuelve"
+	(CuOOra soleInstance  autenticarUsuarioConNombre: userName  protegidoPor: password ) "Si existe dicho usuario, lo devuelve"
 		ifNotNil: [ :it | self proceedWith: it ]. "Supongamos que it debe ser el usuario (?"
 	userName := nil.
 	password := nil
-]
-
-{ #category : #callbacks }
-LoginComponent >> logout [
-	self session unregister.
-	self requestContext redirectTo: self application url
-]
-
-{ #category : #callbacks }
-LoginComponent >> registerNewUser [
-	self call: RegisterComponent new.
 ]
 
 { #category : #rendering }
 LoginComponent >> renderButtonsOn: aCanvas [
 	self renderSignInButtonOn: aCanvas.
 	aCanvas horizontalRule.
-	aCanvas paragraph: 'No tenes una cuenta?'.
-	self renderSignUpButtonOn: aCanvas.
 ]
 
 { #category : #rendering }
@@ -45,11 +42,4 @@ LoginComponent >> renderSignInButtonOn: aCanvas [
 	aCanvas submitButton 
 		callback: [ self login ];
 		with: 'Iniciar sesion'
-]
-
-{ #category : #rendering }
-LoginComponent >> renderSignUpButtonOn: aCanvas [
-	aCanvas submitButton 
-		callback: [ self registerNewUser ];
-		with: 'Registrate, ES GRATAROLA'
 ]

@@ -1,3 +1,6 @@
+"
+.
+"
 Class {
 	#name : #AccessGrantingComponent,
 	#superclass : #WAComponent,
@@ -7,11 +10,6 @@ Class {
 	],
 	#category : #'CuOOra-ui'
 }
-
-{ #category : #model }
-AccessGrantingComponent >> model [
-	^ CuOOra soleInstance 
-]
 
 { #category : #accessing }
 AccessGrantingComponent >> password [

@@ -65,7 +65,7 @@ NewAnswerComponent >> texto: text [
 
 { #category : #callbacks }
 NewAnswerComponent >> uploadAnswer [
-	CuOOra soleInstance agregarRespuestaDeUsuario: (self session user) aPregunta: (self pregunta) conTexto: (self texto).
+	self model agregarRespuestaDeUsuario: (self session user) aPregunta: (self pregunta) conTexto: (self texto).
 	self goBackQuestion 
 ]
 

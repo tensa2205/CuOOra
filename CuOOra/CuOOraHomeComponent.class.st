@@ -6,7 +6,7 @@ Class {
 
 { #category : #callbacks }
 CuOOraHomeComponent >> dislike: question [ 
-	question darDislike: (self session user)  
+	self model registrarDislikeDeUsuario: (self session user) aPost: question
 	
 ]
 
@@ -29,14 +29,24 @@ CuOOraHomeComponent >> goToUserDetail: user [
 ]
 
 { #category : #callbacks }
-CuOOraHomeComponent >> like: question [ 
-	question darLike: (self session user)  
+CuOOraHomeComponent >> like: question [
+	self model registrarLikeDeUsuario: (self session user)   aPost: question
+	  
 	
 ]
 
 { #category : #callbacks }
 CuOOraHomeComponent >> logout [
-	self call: (LoginComponent new logout ; yourself)
+	self session unregister.
+	self requestContext redirectTo: self application url
+]
+
+{ #category : #model }
+CuOOraHomeComponent >> model [
+	^ CuOOra soleInstance 
+	
+	
+	
 ]
 
 { #category : #callbacks }
@@ -60,7 +70,7 @@ CuOOraHomeComponent >> renderLastQuestions: aCanvas [
 	aCanvas heading: 'Ultimas preguntas'.
 	aCanvas
 		unorderedList: [ 
-			((CuOOra soleInstance) obtenerPreguntasRelevantesDeUsuario: self session user)
+			(self model obtenerPreguntasRelevantesDeUsuario: self session user)
 				do:[ :each | 
 					(self renderQuestion: each with: aCanvas)].
 		].

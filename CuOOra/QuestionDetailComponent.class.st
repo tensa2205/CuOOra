@@ -51,7 +51,7 @@ QuestionDetailComponent >> renderContentOn: aCanvas [
 	
 	aCanvas
 		unorderedList: [ 
-			( (CuOOra soleInstance) obtenerRespuestasDePregunta: (self pregunta) )
+			( self model obtenerRespuestasDePregunta: (self pregunta) )
 				do:[ :each | 
 					(self renderAnswer: each with: aCanvas)].
 		].
