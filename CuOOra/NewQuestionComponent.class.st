@@ -3,19 +3,37 @@ Class {
 	#superclass : #CuOOraHomeComponent,
 	#instVars : [
 		'titulo',
-		'texto'
+		'texto',
+		'topicos'
 	],
 	#category : #'CuOOra-ui'
 }
+
+{ #category : #operation }
+NewQuestionComponent >> crearColeccionDeTopicos: coleccionFiltrada [
+	^ (coleccionFiltrada collect:[:nombre | self transformarATopico: nombre]) removeDuplicates 
+]
+
+{ #category : #parsing }
+NewQuestionComponent >> filtrarTopicosValidos [
+	^ (self parsearTopicos ) select: [ :nombreTopico | self validarTexto: nombreTopico ]
+]
 
 { #category : #callbacks }
 NewQuestionComponent >> goBackHome [
 	self answer 
 ]
 
+{ #category : #parsing }
+NewQuestionComponent >> parsearTopicos [
+	^ (self separarTopicos ) collect: [ :nombreTopico | nombreTopico trimBoth ].
+]
+
 { #category : #rendering }
 NewQuestionComponent >> registrar [
-	self model agregarPreguntaATopico: ((self topicos) asOrderedCollection)  yUsuario: (self session user) conTitulo: (self titulo)  conDescripcion: (self texto).
+	(self validarPregunta)
+	ifFalse: [ ^ self ].
+	self model agregarPreguntaATopico: (self topicos)  yUsuario: (self session user) conTitulo: (self titulo)  conDescripcion: (self texto).
 	self goBackHome .
 	
 ]
@@ -70,13 +88,18 @@ NewQuestionComponent >> renderInputElementsOn: aCanvas [
 				with: 'Escriba aqui el desarrollo de su pregunta.' ].
 		
 		aCanvas paragraph:[
-			aCanvas label:'Topicos:'].
-		aCanvas space: 10.
-		"aCanvas multiSelect
- 			list: (CuOOra soleInstance) topicos ;
- 			selected: topicos;
- 			callback: [ :valores | self topicos: valores ]."
+			aCanvas label:'Topicos:'.
+			aCanvas textInput 
+				size: 30;
+				callback: [:valorNuevo | self topicos: valorNuevo  ];
+				with: 'Ingrese los topicos separados por coma.'] 
 	
+]
+
+{ #category : #parsing }
+NewQuestionComponent >> separarTopicos [
+"Separa los tópicos eliminando las comas y los devuelve como colección"
+	^ (topicos substrings: ',') asOrderedCollection 
 ]
 
 { #category : #accessing }
@@ -97,4 +120,35 @@ NewQuestionComponent >> titulo [
 { #category : #accessing }
 NewQuestionComponent >> titulo: title [ 
 	titulo := title
+]
+
+{ #category : #accessing }
+NewQuestionComponent >> topicos [ 
+	^ self crearColeccionDeTopicos: (self filtrarTopicosValidos ).
+]
+
+{ #category : #accessing }
+NewQuestionComponent >> topicos: topics [
+	topicos := topics
+]
+
+{ #category : #operation }
+NewQuestionComponent >> transformarATopico: nombreTopico [
+	^ (self model comprobarExistenciaTopico: nombreTopico ) ifNil: [ ^ self model agregarTopicoConNombre: nombreTopico descripcion: '' ]
+]
+
+{ #category : #operation }
+NewQuestionComponent >> validarPregunta [
+	"Si la pregunta es válida entonces puedo crearla"
+	^ ((self validarTexto: titulo ) 
+			and:[ 
+				(self validarTexto: texto) 
+					and:[ self topicos isNotEmpty ]
+					]
+				)
+]
+
+{ #category : #operation }
+NewQuestionComponent >> validarTexto: aString [
+	^ aString isNotEmpty 
 ]

@@ -87,6 +87,11 @@ CuOOra >> borrarPregunta: pregunta [
 	
 ]
 
+{ #category : #topicos }
+CuOOra >> comprobarExistenciaTopico: nombreTopico [
+	^ topicos detect: [ :topic | topic comprobarNombre: nombreTopico  ] ifNone: [ ^ nil ] 
+]
+
 { #category : #usuarios }
 CuOOra >> crearUsuarioConNombre: nom contraseña: password [
 	(usuarios anySatisfy: [ :usuario | usuario nombreUsuario = nom ])

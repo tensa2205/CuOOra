@@ -52,6 +52,11 @@ Topico >> bajaPregunta: pregunta [
 ]
 
 { #category : #accessing }
+Topico >> comprobarNombre: nom [
+	^ (nombre asLowercase = nom asLowercase).
+]
+
+{ #category : #accessing }
 Topico >> descripcion [
 	^ descripcion
 ]
