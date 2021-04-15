@@ -56,15 +56,29 @@ CuOOraHomeComponent >> newQuestion [
 
 { #category : #rendering }
 CuOOraHomeComponent >> renderContentOn: aCanvas [
-	self renderLoggedUser: aCanvas.
-	aCanvas horizontalRule .
-	self renderMakeACuestionOn: aCanvas.
-	self renderLastQuestions: aCanvas.
+	aCanvas div 
+	class: 'container';
+	with:[ 
+		aCanvas div 
+			class: 'row';
+			with:
+			[
+			aCanvas div
+				class: 'col align-self-center';
+				with: [ 
+				self renderLoggedUser: aCanvas.
+				aCanvas horizontalRule .
+				self renderMakeACuestionOn: aCanvas.
+				self renderLastQuestions: aCanvas].
+			 ]
+		]
 ]
 
 { #category : #rendering }
 CuOOraHomeComponent >> renderLastQuestions: aCanvas [
-	aCanvas heading: 'Ultimas preguntas'.
+	aCanvas heading
+		level: 3;
+		with: 'Ultimas Preguntas'.
 	aCanvas
 		unorderedList: [ 
 			(self model obtenerPreguntasRelevantesDeUsuario: self session user)
@@ -76,24 +90,51 @@ CuOOraHomeComponent >> renderLastQuestions: aCanvas [
 
 { #category : #rendering }
 CuOOraHomeComponent >> renderLoggedUser: aCanvas [
-	aCanvas heading:'CuooRa'.
+	aCanvas heading
+		class:' mt-3';
+		with: 'CuOOra'.
 	
-	aCanvas paragraph: [  
-		aCanvas space: 50.
-		aCanvas text: self session user nombreUsuario.
-		aCanvas space: 3.
-		aCanvas anchor
-			callback: [self logout ];
-			with: 'Log out'.
-		].
+	aCanvas div 
+	class: 'container';
+	with:[ 
+		aCanvas div 
+			class: 'row';
+			with:[
+			aCanvas div
+			class: 'col-9'.
+			aCanvas div
+				class: 'col align-self-center';
+				with: [ 
+				aCanvas paragraph: [  
+				
+				aCanvas text: self session user nombreUsuario.
+				aCanvas space: 3.
+				aCanvas anchor
+					callback: [self logout ];
+					with: 'Log out'.
+		]]]]. 
 ]
 
 { #category : #rendering }
 CuOOraHomeComponent >> renderMakeACuestionOn: aCanvas [
-	aCanvas anchor
-		callback: [ self newQuestion  ];
-		with: 'Hacer una nueva pregunta'.
+
+  aCanvas div 
+	class: 'container col-12';
+	with:[ 
+		aCanvas div 
+			class: 'row';
+			with:[
+			aCanvas div
+			class: 'col-9'.
+			aCanvas div
+				class: 'col align-self-center';
+				with: [ 
+				aCanvas anchor
+				class: 'link-success col-6';
+				callback: [ self newQuestion  ];
+				with: 'Hacer una nueva pregunta']]].
 	aCanvas break.
+	
 ]
 
 { #category : #rendering }
@@ -133,4 +174,10 @@ CuOOraHomeComponent >> renderReactionsOn: aCanvas with: aPost [
 			callback: [ self dislike: aPost ];
 			with: 'dislike'.
 		].
+]
+
+{ #category : #updating }
+CuOOraHomeComponent >> updateRoot: anHtmlRoot [ 
+    super updateRoot: anHtmlRoot.
+    anHtmlRoot stylesheet url: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
 ]

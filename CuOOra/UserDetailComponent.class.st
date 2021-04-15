@@ -14,10 +14,20 @@ UserDetailComponent >> follow [
 
 { #category : #rendering }
 UserDetailComponent >> renderContentOn: aCanvas [
-	self renderLoggedUser: aCanvas.
-	aCanvas horizontalRule.
-	self renderDetailsOn: aCanvas.
-	
+	aCanvas div
+	class: 'container';
+	with:[ 
+		aCanvas div 
+			class: 'row';
+			with:
+			[
+			aCanvas div
+				class: 'col align-self-center';
+				with: [ 
+					self renderLoggedUser: aCanvas.
+					aCanvas horizontalRule.
+					self renderDetailsOn: aCanvas.
+					]]]
 ]
 
 { #category : #rendering }

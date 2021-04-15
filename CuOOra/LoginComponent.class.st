@@ -31,7 +31,8 @@ LoginComponent >> renderButtonsOn: aCanvas [
 { #category : #rendering }
 LoginComponent >> renderSignInButtonOn: aCanvas [
 	aCanvas space: 25.
-	aCanvas submitButton 
+	aCanvas submitButton
+		class: 'btn btn-primary';
 		callback: [ self login ];
 		with: 'Iniciar sesion'
 ]

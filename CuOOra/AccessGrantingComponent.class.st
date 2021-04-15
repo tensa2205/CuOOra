@@ -34,31 +34,44 @@ AccessGrantingComponent >> renderButtonsOn: aCanvas [
 
 { #category : #rendering }
 AccessGrantingComponent >> renderContentOn: aCanvas [
-	aCanvas heading: 'CuOOra'.
-	aCanvas
-		form: [ 
-			self renderInputElementsOn: aCanvas.
-			self renderButtonsOn: aCanvas 
-			]
+ 
+					aCanvas heading: 'CuOOra'.
+					aCanvas
+						form: [ 
+							self renderInputElementsOn: aCanvas.
+							self renderButtonsOn: aCanvas 
+						]
 ]
 
 { #category : #rendering }
 AccessGrantingComponent >> renderInputElementsOn: aCanvas [
-	aCanvas paragraph: [ 
-		aCanvas label: 'Usuario:'.
-		aCanvas space: 10.
-		aCanvas textInput 
-			callback: [ :valorNuevo | self userName: valorNuevo ];
-			with: self userName.  ].
 	
+	aCanvas div
+			class: 'form-group col-2';
+			with:[
+			 	aCanvas text: 'Usuario'.
+		  		aCanvas textInput 
+				class: 'form-control required ml-4';	
+				callback: [ :valorNuevo | self userName: valorNuevo ];
+				with: self userName.  ].
+
+	aCanvas div
+			class: 'form-group col-2';
+			with:[
+			 	aCanvas text: 'Contraseña'.
+		  		aCanvas passwordInput 
+				class: 'form-control required ml-4';	
+				callback: [ :valorNuevo | self password: valorNuevo ];
+				with: self password ].
 	
-	aCanvas paragraph: [ 
-		aCanvas label: 'Contraseña:'.
-		aCanvas space: 5.
-		aCanvas passwordInput
-		callback: [ :valorNuevo | self password: valorNuevo ];
-		with: self password ].
-	
+]
+
+{ #category : #updating }
+AccessGrantingComponent >> updateRoot: anHtmlRoot [ 
+    super updateRoot: anHtmlRoot.
+    anHtmlRoot stylesheet url: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
+
+
 ]
 
 { #category : #accessing }

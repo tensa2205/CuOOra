@@ -16,6 +16,11 @@ QuestionDetailComponent >> answerQuestion [
 		yourself).
 ]
 
+{ #category : #callbacks }
+QuestionDetailComponent >> goBackHome [
+	self answer
+]
+
 { #category : #accessing }
 QuestionDetailComponent >> pregunta [
 	^ pregunta
@@ -45,24 +50,38 @@ QuestionDetailComponent >> renderAnswer: answer with: aCanvas [
 
 { #category : #rendering }
 QuestionDetailComponent >> renderContentOn: aCanvas [
-	self renderLoggedUser: aCanvas.
-	aCanvas horizontalRule .
-	self renderQuestion: self pregunta with: aCanvas.
+	aCanvas div 
+	class: 'container';
+	with:[ 
+		aCanvas div 
+			class: 'row';
+			with:
+			[
+			aCanvas div
+				class: 'col align-self-center';
+				with: [ 
+					self renderLoggedUser: aCanvas.
+					aCanvas horizontalRule .
+					self renderQuestion: self pregunta with: aCanvas.
 	
-	aCanvas
-		unorderedList: [ 
-			( self model obtenerRespuestasDePregunta: (self pregunta) )
-				do:[ :each | 
-					(self renderAnswer: each with: aCanvas)].
-		].
+					aCanvas
+						unorderedList: [ 
+						( self model obtenerRespuestasDePregunta: (self pregunta) )
+							do:[ :each | 
+						(self renderAnswer: each with: aCanvas)].
+							]	.
 	
-	aCanvas paragraph:[
-		aCanvas space: 50.
-		aCanvas text: 'No hay mas respuestas'].
+						aCanvas paragraph:[
+						aCanvas space: 50.
+						aCanvas text: 'No hay mas respuestas'].
 	
-	aCanvas break.
+						aCanvas break.
 	
-	aCanvas anchor
-		callback:[self answerQuestion];
-		with: '+ Agregar respuesta'.
+						aCanvas anchor
+						callback:[self answerQuestion];
+						with: '+ Agregar respuesta'.
+												
+						]]]
+			
+						
 ]

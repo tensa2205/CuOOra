@@ -41,56 +41,78 @@ NewQuestionComponent >> registrar [
 { #category : #rendering }
 NewQuestionComponent >> renderButtonsOn: aCanvas [
 	aCanvas button 
-		callback: [ self goBackHome  ];
+		class:'btn btn-danger';
+		callback: [ self goBackHome ];
 		with: 'Cancelar'.
-	aCanvas space: 5.
+	aCanvas space:5 .
 	aCanvas submitButton 
-		callback: [ self registrar ];
+		class: 'btn btn-success';
+		callback: [ self registrar  ];
 		with: 'Guardar'
 ]
 
 { #category : #rendering }
 NewQuestionComponent >> renderContentOn: aCanvas [
-	self renderLoggedUser: aCanvas.
-	aCanvas horizontalRule .
-	aCanvas heading level:2 ; with: 'Nueva pregunta'.
-	aCanvas form:[
-		self renderInputElementsOn: aCanvas.
-		aCanvas break.
-		self renderButtonsOn: aCanvas.
-		].
-	aCanvas horizontalRule.
+	aCanvas div 
+	class: 'container';
+	with:[ 
+		aCanvas div 
+			class: 'row';
+			with:
+			[
+			aCanvas div
+				class: 'col align-self-center';
+				with: [ 
+					self renderLoggedUser: aCanvas.
+					aCanvas horizontalRule .
+					aCanvas heading level:2 ; with: 'Nueva pregunta'.
+					aCanvas form:[
+						self renderInputElementsOn: aCanvas.
+						aCanvas break.
+					self renderButtonsOn: aCanvas.
+					]]].
+	aCanvas horizontalRule. ]
 ]
 
 { #category : #rendering }
 NewQuestionComponent >> renderInputElementsOn: aCanvas [
 		
-		aCanvas paragraph: [ 
-			aCanvas label: 'Titulo:' ].
-		aCanvas paragraph: [ 
-			aCanvas space: 10.
-			aCanvas textArea
-				columns: 80;
-				rows: 3;
+			aCanvas div
+			class: 'form-group col-7';
+			with:[
+			 	aCanvas paragraph: [  
+				aCanvas label 
+				with:[ aCanvas emphasis:'Titulo:' ] ].
+		  		aCanvas textInput 
+				class: 'form-control required';
 				callback: [ :valorNuevo | self titulo: valorNuevo ];
 				placeholder: 'Escriba aqui el titulo de su pregunta.' ].
 	
 		aCanvas break.
 		
-		aCanvas paragraph: [ 
-			aCanvas label: 'Desarrollo:' ].
-		aCanvas paragraph: [ 
-			aCanvas space: 10.
-			aCanvas textArea
+		aCanvas div
+			class: 'form-group col-7 ';
+			with:[
+			 	aCanvas paragraph: [  
+				aCanvas label 
+				with:[ aCanvas emphasis:'Desarrollo:' ] ].
+			
+		  		aCanvas textArea 
+				class: 'form-control required';
 				columns:80;
 				rows:7;
 				callback: [ :valorNuevo | self texto: valorNuevo ];
-				placeholder: 'Escriba aqui el desarrollo de su pregunta.' ].
+				placeholder: 'Escriba aqui el texto de su pregunta.' ].	
+	
 		
-		aCanvas paragraph:[
-			aCanvas label:'Topicos:'.
-			aCanvas textInput 
-				size: 30;
+		aCanvas div
+			class: 'form-group col-7';
+			with:[
+			 	aCanvas paragraph: [  
+				aCanvas label 
+				with:[ aCanvas emphasis:'Topicos:' ] ].
+		  		aCanvas textInput 
+				class: 'form-control required';
 				callback: [:valorNuevo | self topicos: valorNuevo  ];
 				placeholder: 'Ingrese los topicos separados por coma.'] 
 	
