@@ -36,8 +36,18 @@ Class {
 }
 
 { #category : #constructor }
-Reaccion class >> voto: arg1 usuario: arg2 [
-	^ self new voto: arg1 usuario: arg2
+Reaccion class >> voto: vote usuario: user [
+	^ self new voto: vote usuario: user 
+]
+
+{ #category : #constructor }
+Reaccion class >> votoNegativoDeUsuario: arg2 [
+	^ self new voto: false usuario: arg2
+]
+
+{ #category : #constructor }
+Reaccion class >> votoPositivoDeUsuario: arg2 [
+	^ self new voto: true usuario: arg2
 ]
 
 { #category : #accessing }

@@ -44,6 +44,11 @@ Pregunta >> agregarRespuestaConTexto: text usuario: user [
 	^ respuestas add: (Respuesta texto: text usuario: user)
 ]
 
+{ #category : #abstract }
+Pregunta >> calcularPuntaje [
+	^ 20 + self devolverDiferenciaReacciones 
+]
+
 { #category : #accessing }
 Pregunta >> devolverCantidadRespuestas [
 	^ respuestas size 
@@ -56,7 +61,6 @@ Pregunta >> devolverRespuestasUsuario: user [
 
 { #category : #initialization }
 Pregunta >> initialize [
-	super initialize.
 	respuestas := OrderedCollection new.
 ]
 
@@ -72,7 +76,6 @@ Pregunta >> titulo [
 
 { #category : #constructor }
 Pregunta >> titulo: title texto: text usuario: user [
-	self initialize.
 	titulo := title.
 	texto := text.
 	usuario := user.

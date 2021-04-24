@@ -75,7 +75,6 @@ Topico >> nombre [
 Topico >> nombre: nom descripcion: desc [
 	nombre := nom.
 	descripcion := desc.
-	self initialize
 ]
 
 { #category : #accessing }

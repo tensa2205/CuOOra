@@ -52,22 +52,21 @@ TestCuOOra >> testDevolverPuntajeDeUsuario [
 		
 	
 	p3
-		darLike: '1';
-		darLike: '2';
-		darLike: '3';
-		darLike: '4';
-		darLike: '5';
-		darDislike: '6';
-		darDislike: '7'.
-	
+		recibirReaccion: true deUn: '1';
+		recibirReaccion: true deUn: '2'; 
+		recibirReaccion: true deUn: '3'; 
+		recibirReaccion: true deUn: '4'; 
+		recibirReaccion: true deUn: '5';
+		recibirReaccion: false deUn: '6';
+		recibirReaccion: false deUn: '7'. 
 	p4
-		darLike: '1';
-		darLike: '2';
-		darLike: '3';
-		darLike: '4';
-		darLike: '5';
-		darDislike: '6';
-		darDislike: '7'.
+		recibirReaccion: true deUn: '1';
+		recibirReaccion: true deUn: '2'; 
+		recibirReaccion: true deUn: '3'; 
+		recibirReaccion: true deUn: '4'; 
+		recibirReaccion: true deUn: '5';
+		recibirReaccion: false deUn: '6';
+		recibirReaccion: false deUn: '7'. 
 	
 	"Respuestas y obtenciones de las mismas."
 	r1 := sistema agregarRespuestaDeUsuario: user1 aPregunta: p1 conTexto: 'Contesto pregunta 1, over'.
@@ -75,11 +74,11 @@ TestCuOOra >> testDevolverPuntajeDeUsuario [
 	sistema agregarRespuestaDeUsuario: user1 aPregunta: p3 conTexto: 'Esta respuesta no deberia contar en el puntaje.'.
 	
 	r1
-		darLike: '1';
-		darLike: '2'.
+		recibirReaccion: true deUn: '1';
+		recibirReaccion: true deUn: '2'.
 	r2
-		darLike: '1';
-		darLike: '2'.
+		recibirReaccion: true deUn: '1';
+		recibirReaccion: true deUn: '2'. 
 	
 	self assert: (sistema devolverPuntajeDeUsuario: user1) equals: 150
 	

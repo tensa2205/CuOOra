@@ -39,37 +39,66 @@ Class {
 }
 
 { #category : #accessing }
+Post >> agregarReaccion: react [
+	^ (reacciones add: react)
+]
+
+{ #category : #accessing }
+Post >> buscarReaccionDe: user [ 
+	^ (reacciones select: [ :reaccion | reaccion usuario = user ]).
+]
+
+{ #category : #abstract }
+Post >> calcularPuntaje [
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
 Post >> cantDislikes [
-	^ (reacciones reject: [ :react | react voto ]) size.
+	^ ( reacciones count: [ :react | react voto not ] )
 ]
 
 { #category : #accessing }
 Post >> cantLikes [
-	^ (reacciones select: [ :react | react voto ]) size.
+	^ ( reacciones count: [ :react | react voto ] )
 ]
 
 { #category : #accessing }
 Post >> darDislike: user [
 	| react |
+	react := (self buscarReaccionDe: user).
+	react	
+		ifEmpty: [ ^ (reacciones add: (Reaccion votoNegativoDeUsuario: user)) ].
+	react voto ifTrue: [ react cambiarVoto  ].
+	^ react
+	
+	"| react |
 	react := reacciones select: [ :reaccion | reaccion usuario = user ].
 	react
-		ifEmpty: [ reacciones add: (Reaccion voto: false usuario: user).
-			^ self ].
+		ifEmpty: [ reacciones add: (Reaccion votoNegativoDeUsuario: user).
+			^ nil ].
 	react := react first.
 	react voto
-		ifTrue: [ react cambiarVoto ]
+		ifTrue: [ react cambiarVoto ]"
 ]
 
 { #category : #accessing }
 Post >> darLike: user [
 	| react |
+	react := (self buscarReaccionDe: user).
+	react	
+		ifEmpty: [ ^ (reacciones add: (Reaccion votoPositivoDeUsuario: user)) ].
+	react voto ifFalse: [ react cambiarVoto  ].
+	^ react
+	
+	"| react |
 	react := reacciones select: [ :reaccion| reaccion usuario = user ].
 	react
-		ifEmpty: [ reacciones add: (Reaccion voto: true usuario: user).
-			^ self ].
+		ifEmpty: [ reacciones add: (Reaccion votoPositivoDeUsuario: user).
+			^ nil ].
 	react := react first.
 	react voto
-		ifFalse: [ react cambiarVoto ]
+		ifFalse: [ react cambiarVoto ]"
 ]
 
 { #category : #accessing }
@@ -96,6 +125,17 @@ Post >> devolverHora [
 Post >> initialize [
 	reacciones := OrderedCollection new.
 	timeStamp := DateAndTime now
+]
+
+{ #category : #accessing }
+Post >> recibirReaccion: booleano deUn: user [ 
+	| react |
+	react := self buscarReaccionDe: user.
+	react
+		ifNotEmpty: [ react first voto = booleano
+						ifFalse: [ react first cambiarVoto  ] .
+						^ react ].			
+	^ self agregarReaccion: (Reaccion voto: booleano usuario: user)
 ]
 
 { #category : #accessing }

@@ -59,15 +59,14 @@ Usuario >> contraseña [
 
 { #category : #accessing }
 Usuario >> devolverPreguntasRelevantes [
-	
-	"^ ((	((seguidos collect:[: seguido | seguido preguntasHechas ]) addAll: (topicosInteres collect:[:topico | topico preguntas ])) flatCollect: [ : each | each ]		) 
-					removeDuplicates )"
-	| relevantes |
+
+	^ ((seguidos collect:[: seguido | seguido preguntasHechas ]) union: (topicosInteres collect:[:topico | topico preguntas ])) flattened.
+	"| relevantes |
 	relevantes := OrderedCollection new.
 	relevantes addAll:  (seguidos collect:[: seguido | seguido preguntasHechas ]).
 	relevantes addAll:  (topicosInteres collect:[:topico | topico preguntas ]).
 	relevantes := relevantes flatCollect: [ : each | each ].
-	^ relevantes removeDuplicates 
+	^ relevantes removeDuplicates "
 
 	
 
@@ -75,9 +74,7 @@ Usuario >> devolverPreguntasRelevantes [
 
 { #category : #accessing }
 Usuario >> devolverPuntajePreguntas [
-	| diferenciaLYD |
-	diferenciaLYD := preguntasHechas sumNumbers: [ : pregunta | pregunta devolverDiferenciaReacciones  ].
-	^ (preguntasHechas size * 20) + diferenciaLYD 
+	^ preguntasHechas sumNumbers: [ :pregunta | pregunta calcularPuntaje  ]
 ]
 
 { #category : #accessing }
@@ -88,7 +85,7 @@ Usuario >> devolverRespuestasDeUsuarioEspecifico: user [
 
 { #category : #initialization }
 Usuario >> initialize [
-	seguidos := OrderedCollection new.
+	seguidos := Set new.
 	topicosInteres := OrderedCollection new.
 	preguntasHechas := OrderedCollection new
 ]
@@ -103,7 +100,6 @@ Usuario >> nombreUsuario: nom contraseña: password [
 	nombreUsuario := nom.
 	contraseña := password.
 	timeStamp := DateAndTime now.
-	self initialize
 ]
 
 { #category : #accessing }
@@ -128,8 +124,6 @@ Usuario >> seguidos [
 
 { #category : #accessing }
 Usuario >> seguirUsuario: user [
-	(seguidos includes: user)
-	ifTrue: [ ^ self ].
 	seguidos add: user
 ]
 

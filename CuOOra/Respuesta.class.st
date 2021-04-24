@@ -31,21 +31,18 @@ Respuesta class >> texto: arg1 usuario: arg2 [
 	^ self new texto: arg1 usuario: arg2
 ]
 
-{ #category : #accessing }
-Respuesta >> chequearRespuesta: user [
-	usuario = user
-		ifFalse: [ ^ false ].
-	^ true
+{ #category : #abstract }
+Respuesta >> calcularPuntaje [
+	^ 50 + self devolverDiferenciaReacciones 
 ]
 
-{ #category : #initialization }
-Respuesta >> initialize [
-	super initialize
+{ #category : #accessing }
+Respuesta >> chequearRespuesta: user [
+	^ usuario = user
 ]
 
 { #category : #constructor }
 Respuesta >> texto: arg1 usuario: arg2 [
 	texto := arg1.
 	usuario := arg2.
-	self initialize
 ]

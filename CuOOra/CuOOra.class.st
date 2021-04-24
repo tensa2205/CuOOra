@@ -65,7 +65,7 @@ CuOOra >> agregarRespuestaDeUsuario: user aPregunta: preg conTexto: text [
 { #category : #topicos }
 CuOOra >> agregarTopicoConNombre: nom descripcion: desc [
 	(topicos anySatisfy: [ :topico | topico nombre = nom ])
-	ifTrue: [ ^ self ].
+	ifTrue: [ ^ nil ].
 	^ topicos add: (Topico nombre: nom descripcion: desc)
 ]
 
@@ -95,18 +95,20 @@ CuOOra >> comprobarExistenciaTopico: nombreTopico [
 { #category : #usuarios }
 CuOOra >> crearUsuarioConNombre: nom contraseña: password [
 	(usuarios anySatisfy: [ :usuario | usuario nombreUsuario = nom ])
-	ifTrue: [ ^ self ].
+	ifTrue: [ ^ nil ].
 	^ usuarios add: (Usuario nombreUsuario: nom contraseña: password)
 ]
 
 { #category : #usuarios }
 CuOOra >> devolverPuntajeDeUsuario: user [
-	| respuestas diferenciaLYD|
-	respuestas := self obtenerRespuestasHechasDeUsuario: user.
-	diferenciaLYD := respuestas sumNumbers: [ : respuesta | respuesta devolverDiferenciaReacciones  ].
-	^ ( ( (respuestas size * 50) + diferenciaLYD) + user devolverPuntajePreguntas  )
+	^ (self devolverPuntajeRespuestas: user) + user devolverPuntajePreguntas 
 
 	
+]
+
+{ #category : #accessing }
+CuOOra >> devolverPuntajeRespuestas: user [ 
+	^ (self obtenerRespuestasHechasDeUsuario: user) sumNumbers: [ :respuesta | respuesta calcularPuntaje  ]
 ]
 
 { #category : #initialization }
