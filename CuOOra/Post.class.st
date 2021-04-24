@@ -44,8 +44,10 @@ Post >> agregarReaccion: react [
 ]
 
 { #category : #accessing }
-Post >> buscarReaccionDe: user [ 
-	^ (reacciones select: [ :reaccion | reaccion usuario = user ]).
+Post >> buscarReaccionDe: user [
+	^ reacciones select: [ :reaccion | (reaccion usuario = user) ].
+	
+	
 ]
 
 { #category : #abstract }
@@ -128,9 +130,14 @@ Post >> initialize [
 ]
 
 { #category : #accessing }
+Post >> reacciones [
+	^ reacciones 
+]
+
+{ #category : #accessing }
 Post >> recibirReaccion: booleano deUn: user [ 
 	| react |
-	react := self buscarReaccionDe: user.
+	react := (self buscarReaccionDe: user).
 	react
 		ifNotEmpty: [ react first voto = booleano
 						ifFalse: [ react first cambiarVoto  ] .

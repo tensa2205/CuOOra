@@ -42,11 +42,14 @@ TestPregunta >> testDarLikeDislike [
 	tmp1 := 'Diego'.
 	tmp2 := 'Pedro'.
 	p1
-		darLike: tmp1;
-		darLike: tmp2.
+		recibirReaccion: true deUn: tmp1;
+		recibirReaccion: true deUn: tmp2. 
 	tmp3 := p1 devolverDiferenciaReacciones.
 	self assert: tmp3 equals: 2.
-	p1 darDislike: tmp2.
+	
+	p1 
+		recibirReaccion: false deUn: tmp2.
+	
 	tmp3 := p1 devolverDiferenciaReacciones.
 	self assert: tmp3 equals: 0
 ]

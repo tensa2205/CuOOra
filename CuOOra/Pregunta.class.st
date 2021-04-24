@@ -61,6 +61,7 @@ Pregunta >> devolverRespuestasUsuario: user [
 
 { #category : #initialization }
 Pregunta >> initialize [
+	super initialize.
 	respuestas := OrderedCollection new.
 ]
 

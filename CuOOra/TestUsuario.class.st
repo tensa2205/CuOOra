@@ -18,9 +18,6 @@ Class {
 
 { #category : #running }
 TestUsuario >> setUp [
-	"Errores que encontré en el setUp:
-	-Básicamente, siempre que se pasaba un usuario se pasaba un String, lo cuál es incorrecto."
-	
 	"Usuarios"
 	user1 := Usuario nombreUsuario: 'Raul' contraseña: '12345'.
 	toFollow := Usuario nombreUsuario: 'Messi' contraseña: 'Messirve'.
@@ -42,8 +39,9 @@ TestUsuario >> setUp [
 	r1 := p1 agregarRespuestaConTexto: 'hola' usuario: toFollow.
 	r2 := p3 agregarRespuestaConTexto: 'si lo eres' usuario: user1.
 	
-	p2 darDislike: toFollow.
-	r2 darLike: toFollow.
+	p2 recibirReaccion: false deUn: toFollow .
+	r2 recibirReaccion: true deUn: toFollow . 
+	
 	
 	t1 := Topico nombre: 'Futbol' descripcion: 'Todo sobre futbol'.
 	t1 registrarPregunta: p4.
