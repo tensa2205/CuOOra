@@ -139,11 +139,13 @@ CuOOra >> instanciaPrueba [
 	
 	"Pregunta de pedro"
 	preguntaP := self agregarPreguntaATopico: colec1  yUsuario: pedro conTitulo: '¿Para que sirve el metodo setUp?' conDescripcion: 'Exacto, para que me sirve.' .
-	self agregarRespuestaDeUsuario: diego aPregunta: preguntaP conTexto: 'Sirve para instanciar los objetos que son
-							evaluados por el test en un único método y que se ejecute siempre antes de cada test.'.
+	preguntaP agregarRespuestaConTexto: 'Sirve para instanciar los objetos que son
+							evaluados por el test en un único método y que se ejecute siempre antes de cada test.'
+							usuario: diego.
+							
 	"Pregunta de diego"
 	preguntaD := self agregarPreguntaATopico: colec2  yUsuario: diego  conTitulo: '¿Que significa #messageNotUnderstood?' conDescripcion: 'No se que significa.' .
-	self agregarRespuestaDeUsuario: pedro aPregunta: preguntaD conTexto: 'Significa que el objeto que recibió el mensaje no encontró ningún método para ejecutar en respuesta.'.
+	preguntaD agregarRespuestaConTexto: 'Significa que el objeto que recibió el mensaje no encontró ningún método para ejecutar en respuesta.' usuario: pedro
 ]
 
 { #category : #topicos }

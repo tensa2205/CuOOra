@@ -86,7 +86,7 @@ NewAnswerComponent >> texto: text [
 NewAnswerComponent >> uploadAnswer [
 	(self validarRespuesta )
 	ifFalse: [ ^ self ].
-	self model agregarRespuestaDeUsuario: (self session user) aPregunta: (self pregunta) conTexto: (self texto).
+	self pregunta agregarRespuestaConTexto: (self texto) usuario: (self session user).
 	self goBackQuestion 
 ]
 

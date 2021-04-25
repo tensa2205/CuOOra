@@ -69,9 +69,9 @@ TestCuOOra >> testDevolverPuntajeDeUsuario [
 		recibirReaccion: false deUn: '7'. 
 	
 	"Respuestas y obtenciones de las mismas."
-	r1 := sistema agregarRespuestaDeUsuario: user1 aPregunta: p1 conTexto: 'Contesto pregunta 1, over'.
-	r2 := sistema agregarRespuestaDeUsuario: user1 aPregunta: p2 conTexto: 'Contesto pregunta 2, over'.
-	sistema agregarRespuestaDeUsuario: user1 aPregunta: p3 conTexto: 'Esta respuesta no deberia contar en el puntaje.'.
+	r1 := p1 agregarRespuestaConTexto: 'Contesto pregunta 1, over' usuario: user1.
+	r2 := p2 agregarRespuestaConTexto: 'Contesto pregunta 2, over' usuario: user1. 
+	p3 agregarRespuestaConTexto: 'Esta respuesta no deberia contar en el puntaje.' usuario: user1. 
 	
 	r1
 		recibirReaccion: true deUn: '1';
@@ -93,11 +93,10 @@ TestCuOOra >> testObtenerRespuestasUsuario [
 	p1 := sistema agregarPreguntaATopico: sistema topicos yUsuario: user1 conTitulo: 'Primer pregunta' conDescripcion: 'd1'.
 	p2 := sistema agregarPreguntaATopico: sistema topicos yUsuario: user1 conTitulo: 'Segunda pregunta' conDescripcion: 'd2'.
 	p3 := sistema agregarPreguntaATopico: sistema topicos yUsuario: user2 conTitulo: 'Tercer pregunta' conDescripcion: 'd3'.
-		
-	sistema 
-		agregarRespuestaDeUsuario: user2 aPregunta: p1 conTexto: 'Respuesta p1';
-		agregarRespuestaDeUsuario: user2 aPregunta: p2 conTexto: 'Respuesta p2';
-		agregarRespuestaDeUsuario: user2 aPregunta: p3 conTexto: 'Respuesta p3'.
+	
+	p1 agregarRespuestaConTexto: 'Respuesta p1' usuario: user2.
+	p2 agregarRespuestaConTexto: 'Respuesta p2' usuario: user2.
+	p3 agregarRespuestaConTexto: 'Respuesta p3' usuario: user2.
 	
 	respuestas := sistema obtenerRespuestasHechasDeUsuario: user2.
 	
