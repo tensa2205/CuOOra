@@ -9,7 +9,7 @@ Class {
 
 { #category : #callbacks }
 UserDetailComponent >> follow [
-	self model  seguirUsuario: usuario conUsuario: (self session user)  
+	self session user seguirUsuario: usuario.  
 ]
 
 { #category : #rendering }
@@ -54,7 +54,7 @@ UserDetailComponent >> renderUserHeadOn: aCanvas [
 UserDetailComponent >> renderUserQuestionsOn: aCanvas [
 	aCanvas
 		unorderedList: [ 
-			(self model obtenerPreguntasHechasDeUsuario: self usuario)
+			(self usuario preguntasHechas )
 				do:[ :each | 
 					(self renderQuestion: each with: aCanvas)].
 		].

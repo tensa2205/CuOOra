@@ -5,9 +5,8 @@ Class {
 }
 
 { #category : #callbacks }
-CuOOraHomeComponent >> dislike: question [ 
-	self model registrarDislikeDeUsuario: (self session user) aPost: question
-	
+CuOOraHomeComponent >> giveReaction: booleano to: post [
+	post recibirReaccion: booleano deUn: (self session user)
 ]
 
 { #category : #callbacks }
@@ -26,13 +25,6 @@ CuOOraHomeComponent >> goToUserDetail: user [
 			(UserDetailComponent new 
 				usuario: user;
 				yourself)
-]
-
-{ #category : #callbacks }
-CuOOraHomeComponent >> like: question [
-	self model registrarLikeDeUsuario: (self session user)   aPost: question
-	  
-	
 ]
 
 { #category : #callbacks }
@@ -167,11 +159,11 @@ CuOOraHomeComponent >> renderReactionsOn: aCanvas with: aPost [
 	
 	aCanvas paragraph:[
 		aCanvas anchor 
-			callback: [ self like: aPost ];
+			callback: [ self giveReaction: true to: aPost];
 			with: 'like'.
 		aCanvas text: ' | '.
 		aCanvas anchor 
-			callback: [ self dislike: aPost ];
+			callback: [ self giveReaction: false to: aPost];
 			with: 'dislike'.
 		].
 ]

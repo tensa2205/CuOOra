@@ -132,8 +132,10 @@ CuOOra >> instanciaPrueba [
 		add:topicoOO;
 		add:topicoCharlita.
 	
-	self seguirUsuario: diego conUsuario: juan. "Juan sigue a Diego"
-	self seguirUsuario: juan conUsuario: pedro. "Pedro sigue a Juan"
+	"Juan sigue a Diego"
+	juan seguirUsuario: diego.
+	"Pedro sigue a Juan"
+	pedro seguirUsuario: juan.
 	
 	
 	
@@ -148,16 +150,6 @@ CuOOra >> instanciaPrueba [
 	preguntaD agregarRespuestaConTexto: 'Significa que el objeto que recibió el mensaje no encontró ningún método para ejecutar en respuesta.' usuario: pedro
 ]
 
-{ #category : #topicos }
-CuOOra >> obtenerPreguntasDeTopico: topic [
-	^ topic preguntas
-]
-
-{ #category : #usuarios }
-CuOOra >> obtenerPreguntasHechasDeUsuario: user [
-	^ user preguntasHechas
-]
-
 { #category : #usuarios }
 CuOOra >> obtenerPreguntasRelevantesDeUsuario: user [
 	| relevantes |
@@ -166,11 +158,6 @@ CuOOra >> obtenerPreguntasRelevantesDeUsuario: user [
 	(relevantes size < 5)
 	ifTrue:[^ relevantes].
 	^ relevantes collect: [ :each | each ] from: 1 to: 5
-]
-
-{ #category : #accessing }
-CuOOra >> obtenerRespuestasDePregunta: preg [
-	^ preg respuestas
 ]
 
 { #category : #usuarios }
@@ -182,26 +169,6 @@ CuOOra >> obtenerRespuestasHechasDeUsuario: user [
 { #category : #accessing }
 CuOOra >> obtenerTopicosDePregunta: preg [
 	^ (topicos select: [:topico | topico tienePregunta: preg]) collect: [ :each | each nombre ]
-]
-
-{ #category : #accessing }
-CuOOra >> registrarDislikeDeUsuario: user aPost: post [
-	post darDislike: user
-]
-
-{ #category : #accessing }
-CuOOra >> registrarLikeDeUsuario: user aPost: post [
-	post darLike: user
-]
-
-{ #category : #accessing }
-CuOOra >> registrarTopicoDeInteres: topic paraUsuario: user [
-	user registrarTopicoDeInteres: topic
-]
-
-{ #category : #usuarios }
-CuOOra >> seguirUsuario: usuarioSeguir conUsuario: seguidor [
-	seguidor seguirUsuario: usuarioSeguir
 ]
 
 { #category : #usuarios }
