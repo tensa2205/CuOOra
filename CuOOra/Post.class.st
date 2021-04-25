@@ -66,44 +66,6 @@ Post >> cantLikes [
 ]
 
 { #category : #accessing }
-Post >> darDislike: user [
-	| react |
-	react := (self buscarReaccionDe: user).
-	react	
-		ifEmpty: [ ^ (reacciones add: (Reaccion votoNegativoDeUsuario: user)) ].
-	react voto ifTrue: [ react cambiarVoto  ].
-	^ react
-	
-	"| react |
-	react := reacciones select: [ :reaccion | reaccion usuario = user ].
-	react
-		ifEmpty: [ reacciones add: (Reaccion votoNegativoDeUsuario: user).
-			^ nil ].
-	react := react first.
-	react voto
-		ifTrue: [ react cambiarVoto ]"
-]
-
-{ #category : #accessing }
-Post >> darLike: user [
-	| react |
-	react := (self buscarReaccionDe: user).
-	react	
-		ifEmpty: [ ^ (reacciones add: (Reaccion votoPositivoDeUsuario: user)) ].
-	react voto ifFalse: [ react cambiarVoto  ].
-	^ react
-	
-	"| react |
-	react := reacciones select: [ :reaccion| reaccion usuario = user ].
-	react
-		ifEmpty: [ reacciones add: (Reaccion votoPositivoDeUsuario: user).
-			^ nil ].
-	react := react first.
-	react voto
-		ifFalse: [ react cambiarVoto ]"
-]
-
-{ #category : #accessing }
 Post >> devolverDiferenciaReacciones [
 	^ self cantLikes - self cantDislikes 
 ]

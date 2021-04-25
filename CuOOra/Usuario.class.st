@@ -80,7 +80,7 @@ Usuario >> devolverPuntajePreguntas [
 { #category : #accessing }
 Usuario >> devolverRespuestasDeUsuarioEspecifico: user [
 	^ (preguntasHechas
-		collect: [ :preg | preg devolverRespuestasUsuario: user ]) flatCollect: [ :each | each ]
+		collect: [ :preg | preg devolverRespuestasUsuario: user ]) flattened 
 ]
 
 { #category : #initialization }
