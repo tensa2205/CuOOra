@@ -100,7 +100,7 @@ CuOOra >> devolverPuntajeDeUsuario: user [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #usuarios }
 CuOOra >> devolverPuntajeRespuestas: user [ 
 	^ (self obtenerRespuestasHechasDeUsuario: user) sumNumbers: [ :respuesta | respuesta calcularPuntaje  ]
 ]
@@ -175,9 +175,8 @@ CuOOra >> obtenerRespuestasDePregunta: preg [
 
 { #category : #usuarios }
 CuOOra >> obtenerRespuestasHechasDeUsuario: user [
-	"Reject then Collect lo que hace es ver la colección de tal forma que estén todos los usuarios menos aquel usuario donde usuarioRechazar == user haya evaluado true.
-	Esto permite que se procesen todos los usuarios excepto el usuario que pasamos como parámetro (de tal forma que no tomemos respuestas a preguntas que hizo el mismo usuario)."
-	^ (usuarios reject: [ : usuarioRechazar | usuarioRechazar == user ] thenCollect: [ : usuario | usuario devolverRespuestasDeUsuarioEspecifico: user ]) flatCollect: [ : each | each ]
+	" ESTE MÉTODO SE USA PARA EL CALCULO DE PUNTAJE DE UN USUARIO. "
+	^ (usuarios reject: [ : usuarioRechazar | usuarioRechazar == user ] thenCollect: [ : usuario | usuario devolverRespuestasDeUsuarioEspecifico: user ]) flattened
 ]
 
 { #category : #accessing }
@@ -203,6 +202,12 @@ CuOOra >> registrarTopicoDeInteres: topic paraUsuario: user [
 { #category : #usuarios }
 CuOOra >> seguirUsuario: usuarioSeguir conUsuario: seguidor [
 	seguidor seguirUsuario: usuarioSeguir
+]
+
+{ #category : #usuarios }
+CuOOra >> todasLasRespuestasDeUsuario: user [
+	"Este método incluye también las respuestas que un usuario hace a sus propias preguntas. Tal como se pide en el enunciado"
+	^ (usuarios collect: [ :usuario | usuario devolverRespuestasDeUsuarioEspecifico: user]) flattened 
 ]
 
 { #category : #accessing }

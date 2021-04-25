@@ -98,9 +98,9 @@ TestCuOOra >> testObtenerRespuestasUsuario [
 	p2 agregarRespuestaConTexto: 'Respuesta p2' usuario: user2.
 	p3 agregarRespuestaConTexto: 'Respuesta p3' usuario: user2.
 	
-	respuestas := sistema obtenerRespuestasHechasDeUsuario: user2.
+	respuestas := sistema todasLasRespuestasDeUsuario: user2.
 	
-	self assert: respuestas size equals:2
+	self assert: respuestas size equals:3
 		
 	
 	
