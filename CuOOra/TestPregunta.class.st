@@ -5,7 +5,9 @@ Class {
 		'p1',
 		'res1',
 		'res2',
-		'user'
+		'user',
+		'userPrueba1',
+		'userPrueba2'
 	],
 	#category : #'CuOOra-tests'
 }
@@ -13,10 +15,12 @@ Class {
 { #category : #running }
 TestPregunta >> setUp [
 	user := Usuario nombreUsuario: 'El pepe' contraseña: '1' .
-	p1 := Pregunta titulo: 'Hola' texto: 'Mundo' usuario: 'Pepe'.
+	p1 := Pregunta titulo: 'Hola' texto: 'Mundo' usuario: user.
+	userPrueba1 := Usuario nombreUsuario: 'Pedro' contraseña: '3'.
+	userPrueba2 := Usuario nombreUsuario: 'Dieg' contraseña: '2'.
 	
-	p1 agregarRespuestaConTexto: 'xxxxxxx' usuario: 'Diego'.
-	p1 agregarRespuestaConTexto: 'yyyyyyy' usuario: 'Pedro'.
+	res1 := p1 agregarRespuestaConTexto: 'El mejor anime del mundo? Bleach.' usuario: userPrueba2.
+	res2 := p1 agregarRespuestaConTexto: 'El de arriba no conoce de anime, yo digo que Demon Slayer.' usuario: userPrueba1 .
 ]
 
 { #category : #tests }
@@ -33,37 +37,35 @@ TestPregunta >> testCreation [
 	self
 		assert: p1 titulo equals: 'Hola';
 		assert: p1 texto equals: 'Mundo';
-		assert: p1 usuario equals: 'Pepe'
+		assert: p1 usuario equals: user
 ]
 
 { #category : #tests }
 TestPregunta >> testDarLikeDislike [
-	| tmp1 tmp2 tmp3 |
-	tmp1 := 'Diego'.
-	tmp2 := 'Pedro'.
 	p1
-		recibirReaccion: true deUn: tmp1;
-		recibirReaccion: true deUn: tmp2. 
-	tmp3 := p1 devolverDiferenciaReacciones.
-	self assert: tmp3 equals: 2.
+		recibirReaccion: true deUn: userPrueba2 ;
+		recibirReaccion: true deUn: userPrueba1 .
+		 
+	self assert: p1 devolverDiferenciaReacciones equals: 2.
 	
 	p1 
-		recibirReaccion: false deUn: tmp2.
+		recibirReaccion: false deUn: userPrueba1.
 	
-	tmp3 := p1 devolverDiferenciaReacciones.
-	self assert: tmp3 equals: 0
+	self assert: p1 devolverDiferenciaReacciones equals: 0
 ]
 
 { #category : #tests }
 TestPregunta >> testDevolverRespuestasUsuario [
-	| tmp1 tmp2 |
-	tmp2 := 'Pedro'.
-	tmp1 := p1 devolverRespuestasUsuario: tmp2.
-	self assert: (tmp1 allSatisfy: [ :arg1 | arg1 usuario = tmp2 ])
+	| respuestas |
+	respuestas := p1 devolverRespuestasUsuario: userPrueba1 .
+	self assert: (respuestas allSatisfy: [ :arg1 | arg1 usuario = userPrueba1  ])
 ]
 
 { #category : #tests }
 TestPregunta >> testRespuestas [
-	p1 respuestas.
-	self assert: p1 respuestas size equals: 2
+	| answers |
+	answers := p1 respuestas.
+	self
+		assert: (answers at: 2) texto equals: 'El mejor anime del mundo? Bleach.';
+		assert: (answers at: 1) texto equals: 'El de arriba no conoce de anime, yo digo que Demon Slayer.'
 ]

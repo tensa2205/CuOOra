@@ -57,11 +57,6 @@ CuOOra >> agregarPreguntaATopico: topics yUsuario: user conTitulo: title conDesc
 	^ preg
 ]
 
-{ #category : #accessing }
-CuOOra >> agregarRespuestaDeUsuario: user aPregunta: preg conTexto: text [
-	^ (preg agregarRespuestaConTexto: text usuario: user )
-]
-
 { #category : #topicos }
 CuOOra >> agregarTopicoConNombre: nom descripcion: desc [
 	(topicos anySatisfy: [ :topico | topico nombre = nom ])
@@ -78,7 +73,6 @@ CuOOra >> autenticarUsuarioConNombre: unNombre protegidoPor: unaPassword [
 
 { #category : #accessing }
 CuOOra >> borrarPregunta: pregunta [
-	"Es necesario recorrer cada tópico para ver si la pregunta está ahí? Esto podría evitarlo haciendo una dirección bidireccional, Pero que tan sano sería usar una relación así?"
 	| usuario |
 	topicos do: [ : topico | topico bajaPregunta: pregunta ].
 	usuario := pregunta usuario .

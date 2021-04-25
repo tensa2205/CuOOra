@@ -50,7 +50,8 @@ TestUsuario >> setUp [
 { #category : #tests }
 TestUsuario >> testBajaPregunta [ 
 	user1 bajaPregunta: p1.
-	self assert: user1 preguntasHechas size equals: 1
+	self 
+		assert: (user1 preguntasHechas includes: p1) not.
 ]
 
 { #category : #tests }
@@ -60,12 +61,14 @@ TestUsuario >> testDevolverPreguntasRelevantes [
 	preguntasRel := user1 devolverPreguntasRelevantes.
 	pregunta := preguntasRel first.
 	
-	self assert: preguntasRel size equals: 1.
-	self assert: (pregunta usuario) equals: toFollow .
+	self 	assert: preguntasRel size equals: 1;
+			assert: (pregunta usuario) equals: toFollow .
 		
 	user1 registrarTopicoDeInteres: t1.
 	preguntasRel := user1 devolverPreguntasRelevantes.
-	self assert: preguntasRel size equals: 2
+	self 
+		assert: preguntasRel size equals: 2;
+		assert: (preguntasRel includes: p4).
 ]
 
 { #category : #tests }
@@ -80,8 +83,8 @@ TestUsuario >> testPreguntasHechas [
 	user1 preguntasHechas.
 	self
 		assert: user1 preguntasHechas size equals: 2;
-		assert: user1 preguntasHechas last titulo equals: '!!!';
-		assert: user1 preguntasHechas first texto equals: 'no se nada'
+		assert: (user1 preguntasHechas includes: p1);
+		assert: (user1 preguntasHechas includes: p2).
 ]
 
 { #category : #tests }
@@ -90,6 +93,10 @@ TestUsuario >> testSeguirUsuario [
 	self assert: user1 seguidos size equals: 1.
 	user1 seguirUsuario: user3.
 	self assert: user1 seguidos size equals: 2.
+	
+	self 
+		assert: (user1 seguidos includes: toFollow);
+		assert: (user1 seguidos includes: user3).
 ]
 
 { #category : #tests }

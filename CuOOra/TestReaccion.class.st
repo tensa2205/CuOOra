@@ -47,12 +47,3 @@ TestReaccion >> testCreation [
 		assert: r4 usuario equals: 'Pedro';
 		assert: r4 voto
 ]
-
-{ #category : #tests }
-TestReaccion >> testDiferenciasLikesDislikes [
-	| tmp1 tmp2 tmp3 |
-	tmp1 := (reacciones select: [ :arg1 | arg1 voto ]) size.
-	tmp2 := (reacciones reject: [ :arg2 | arg2 voto ]) size.
-	tmp3 := tmp1 - tmp2.
-	self assert: tmp3 equals: 2
-]
