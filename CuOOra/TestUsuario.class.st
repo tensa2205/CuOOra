@@ -74,7 +74,7 @@ TestUsuario >> testDevolverPreguntasRelevantes [
 { #category : #tests }
 TestUsuario >> testDevolverPuntajePreguntas [
 	"-Hizo dos preguntas: 40 puntos.
-	 -Le dieron un dislike a una de sus respuestas, le resta un punto."
+	 -Le dieron un dislike a una de sus preguntas, le resta un punto."
 	self assert: user1 devolverPuntajePreguntas equals: 39.
 ]
 

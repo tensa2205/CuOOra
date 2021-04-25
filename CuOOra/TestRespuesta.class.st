@@ -3,13 +3,16 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'answer',
-		'user'
+		'user',
+		'userNot'
 	],
 	#category : #'CuOOra-tests'
 }
 
 { #category : #running }
 TestRespuesta >> setUp [
+	user := Usuario nombreUsuario: 'Pepito' contraseña: '1'.
+	userNot := Usuario nombreUsuario: 'Astraz' contraseña: '10'.
 	answer := Respuesta texto: 'Soy una respuesta.' usuario: user.
 	
 	answer
@@ -28,7 +31,8 @@ TestRespuesta >> testCalcularPuntaje [
 { #category : #tests }
 TestRespuesta >> testChequearUsuario [
 	self
-		assert: (answer chequearRespuesta: user).
+		assert: (answer chequearRespuesta: user);
+		assert: (answer chequearRespuesta: userNot) not.
 ]
 
 { #category : #accessing }
