@@ -86,7 +86,7 @@ TestCuOOra >> testBorrarPregunta [
 		borrarPregunta: pC.
 	self
 		"Borrado de p1"
-		assert: (topico preguntas includes: p1) not;
+		assert: (topico preguntas includes: p1) not; 
 		assert: (user1 preguntasHechas includes: p1) not;
 		"Borrado de pB"
 		assert: (topico preguntas includes: pB) not;
@@ -116,23 +116,29 @@ TestCuOOra >> testCrearUsuario [
 ]
 
 { #category : #tests }
-TestCuOOra >> testDevolverPuntajeDeUsuario [	
+TestCuOOra >> testDevolverPuntajeDeUsuario [
+	| u1 u2 u6 u7 |
+	u1 := (Usuario nombreUsuario: '1' contraseña: '1').
+	u2 := (Usuario nombreUsuario: '2' contraseña: '2').
+	u6 := (Usuario nombreUsuario: '6' contraseña: '6').
+	u7 := (Usuario nombreUsuario: '7' contraseña: '7').
+	
 	pC
-		recibirReaccion: true deUn: '1';
-		recibirReaccion: true deUn: '2'; 
-		recibirReaccion: false deUn: '7'. 
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: u1);
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: u2); 
+		recibirReaccion: (Reaccion votoNegativoDeUsuario: u7). 
 	self assert: (sistema devolverPuntajeDeUsuario: user1) equals: 161.
 	pD
-		recibirReaccion: false deUn: '6';
-		recibirReaccion: false deUn: '7'. 
+		recibirReaccion: (Reaccion votoNegativoDeUsuario: u6);
+		recibirReaccion: (Reaccion votoNegativoDeUsuario: u7). 
 	self assert: (sistema devolverPuntajeDeUsuario: user1) equals: 159.
 	r1
-		recibirReaccion: true deUn: '1';
-		recibirReaccion: true deUn: '2'.
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: u1);
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: u2).
 	self assert: (sistema devolverPuntajeDeUsuario: user1) equals: 161.
 	r2
-		recibirReaccion: true deUn: '1';
-		recibirReaccion: true deUn: '2'. 
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: u1);
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: u2). 
 	self assert: (sistema devolverPuntajeDeUsuario: user1) equals: 163.
 	
 	

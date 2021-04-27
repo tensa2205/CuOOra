@@ -39,8 +39,8 @@ TestUsuario >> setUp [
 	r1 := p1 agregarRespuestaConTexto: 'hola' usuario: toFollow.
 	r2 := p3 agregarRespuestaConTexto: 'si lo eres' usuario: user1.
 	
-	p2 recibirReaccion: false deUn: toFollow .
-	r2 recibirReaccion: true deUn: toFollow . 
+	p2 recibirReaccion: (Reaccion votoNegativoDeUsuario: toFollow ).
+	r2 recibirReaccion: (Reaccion votoPositivoDeUsuario: toFollow).
 	
 	
 	t1 := Topico nombre: 'Futbol' descripcion: 'Todo sobre futbol'.

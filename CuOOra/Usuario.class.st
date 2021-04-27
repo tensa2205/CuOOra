@@ -60,7 +60,8 @@ Usuario >> contraseña [
 { #category : #accessing }
 Usuario >> devolverPreguntasRelevantes [
 
-	^ ((seguidos collect:[: seguido | seguido preguntasHechas ]) union: (topicosInteres collect:[:topico | topico preguntas ])) flattened.
+	^ ( (seguidos flatCollect:[: seguido | seguido preguntasHechas ]) union: (topicosInteres flatCollect:[:topico | topico preguntas ]) )  asOrderedCollection .
+	
 	"| relevantes |
 	relevantes := OrderedCollection new.
 	relevantes addAll:  (seguidos collect:[: seguido | seguido preguntasHechas ]).

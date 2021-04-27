@@ -4,9 +4,9 @@ Class {
 	#category : #'CuOOra-ui'
 }
 
-{ #category : #callbacks }
-CuOOraHomeComponent >> giveReaction: booleano to: post [
-	post recibirReaccion: booleano deUn: (self session user)
+{ #category : #accessing }
+CuOOraHomeComponent >> dislike: aPost [
+	aPost recibirReaccion: (Reaccion votoNegativoDeUsuario: (self session user))
 ]
 
 { #category : #callbacks }
@@ -25,6 +25,11 @@ CuOOraHomeComponent >> goToUserDetail: user [
 			(UserDetailComponent new 
 				usuario: user;
 				yourself)
+]
+
+{ #category : #accessing }
+CuOOraHomeComponent >> like: aPost [
+	aPost recibirReaccion: (Reaccion votoPositivoDeUsuario: (self session user))
 ]
 
 { #category : #callbacks }
@@ -159,11 +164,11 @@ CuOOraHomeComponent >> renderReactionsOn: aCanvas with: aPost [
 	
 	aCanvas paragraph:[
 		aCanvas anchor 
-			callback: [ self giveReaction: true to: aPost];
+			callback: [ self like: aPost];
 			with: 'like'.
 		aCanvas text: ' | '.
 		aCanvas anchor 
-			callback: [ self giveReaction: false to: aPost];
+			callback: [ self dislike: aPost];
 			with: 'dislike'.
 		].
 ]

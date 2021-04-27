@@ -16,9 +16,9 @@ TestRespuesta >> setUp [
 	answer := Respuesta texto: 'Soy una respuesta.' usuario: user.
 	
 	answer
-		recibirReaccion: true deUn: (Usuario nombreUsuario: 'Juan' contraseña: '1');
-		recibirReaccion: false deUn: (Usuario nombreUsuario: 'Jon' contraseña: '2');
-		recibirReaccion: true deUn: (Usuario nombreUsuario: 'Jin' contraseña: '3'). 
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: (Usuario nombreUsuario: 'Juan' contraseña: '1') );
+		recibirReaccion: (Reaccion votoNegativoDeUsuario: (Usuario nombreUsuario: 'Jon' contraseña: '2'));
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: (Usuario nombreUsuario: 'Jin' contraseña: '3')). 
 
 ]
 

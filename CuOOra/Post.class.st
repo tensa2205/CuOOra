@@ -97,14 +97,14 @@ Post >> reacciones [
 ]
 
 { #category : #accessing }
-Post >> recibirReaccion: booleano deUn: user [ 
+Post >> recibirReaccion: unVoto [
 	| react |
-	react := (self buscarReaccionDe: user).
+	react := (self buscarReaccionDe: unVoto usuario ).
 	react
-		ifNotEmpty: [ react first voto = booleano
+		ifNotEmpty: [ react first voto = unVoto voto
 						ifFalse: [ react first cambiarVoto  ] .
-						^ react ].			
-	^ self agregarReaccion: (Reaccion voto: booleano usuario: user)
+						^ react first].			
+	^ self agregarReaccion: unVoto
 ]
 
 { #category : #accessing }

@@ -43,13 +43,13 @@ TestPregunta >> testCreation [
 { #category : #tests }
 TestPregunta >> testDarLikeDislike [
 	p1
-		recibirReaccion: true deUn: userPrueba2 ;
-		recibirReaccion: true deUn: userPrueba1 .
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: userPrueba2 ) ;
+		recibirReaccion: (Reaccion votoPositivoDeUsuario: userPrueba1 ) .
 		 
 	self assert: p1 devolverDiferenciaReacciones equals: 2.
 	
 	p1 
-		recibirReaccion: false deUn: userPrueba1.
+		recibirReaccion: (Reaccion votoNegativoDeUsuario: userPrueba1 ).
 	
 	self assert: p1 devolverDiferenciaReacciones equals: 0
 ]

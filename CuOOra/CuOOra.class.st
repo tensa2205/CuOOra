@@ -163,7 +163,7 @@ CuOOra >> obtenerPreguntasRelevantesDeUsuario: user [
 { #category : #usuarios }
 CuOOra >> obtenerRespuestasHechasDeUsuario: user [
 	" ESTE MÉTODO SE USA PARA EL CALCULO DE PUNTAJE DE UN USUARIO. "
-	^ (usuarios reject: [ : usuarioRechazar | usuarioRechazar == user ] thenCollect: [ : usuario | usuario devolverRespuestasDeUsuarioEspecifico: user ]) flattened
+	^ (usuarios reject: [ : usuarioRechazar | usuarioRechazar = user ] thenCollect: [ : usuario | usuario devolverRespuestasDeUsuarioEspecifico: user ]) flattened
 ]
 
 { #category : #accessing }
