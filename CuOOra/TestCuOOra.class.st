@@ -23,6 +23,8 @@ Class {
 
 { #category : #running }
 TestCuOOra >> setUp [
+	"Me habría gustado usar el fail: en vez del assert con el not, pero el fail me dió más problemas que soluciones...."
+	
 	sistema := CuOOra new.
 	topico := sistema agregarTopicoConNombre: 'General' descripcion: 'Discusión General'.
 	user1 := sistema crearUsuarioConNombre: 'El pepe' contraseña: '1'.
